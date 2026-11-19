@@ -1,0 +1,513 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Chicken N Chicken Chow Kit</title>
+<style>
+@font-face{font-family:P;font-weight:600;src:url(../assets/fonts/poppins-latin-600-normal.woff2)}
+@font-face{font-family:P;font-weight:700;src:url(../assets/fonts/poppins-latin-700-normal.woff2)}
+@font-face{font-family:P;font-weight:800;src:url(../assets/fonts/poppins-latin-800-normal.woff2)}
+@font-face{font-family:P;font-weight:900;src:url(../assets/fonts/poppins-latin-900-normal.woff2)}
+@font-face{font-family:Hand;font-weight:700;src:url(../assets/fonts/dancing-script-latin-700-normal.woff2)}
+:root{--cream:#FFF3E2;--cream2:#FDE6C8;--maroon:#7A1E2C;--maroon2:#561220;--orange:#F07C1B;--orange2:#F5A02A;--yellow:#FFC94A;--ink:#3B0D14}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream);font-family:P,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+.scene{position:absolute;inset:0;overflow:hidden;visibility:hidden}
+.abs{position:absolute;visibility:hidden;will-change:transform,opacity}
+.center{left:0;width:1080px;text-align:center}
+.bg-cream{background:radial-gradient(120% 70% at 50% 35%,#FFF8EE 0%,var(--cream) 55%,var(--cream2) 100%)}
+.bg-maroon{background:radial-gradient(110% 70% at 50% 40%,#8E2636 0%,var(--maroon) 50%,var(--maroon2) 100%)}
+.bg-orange{background:radial-gradient(110% 70% at 50% 40%,#F9A13A 0%,var(--orange) 55%,#D9561A 100%)}
+.rays{position:absolute;left:-760px;top:-340px;width:2600px;height:2600px;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,255,255,.07) 0 6deg,transparent 6deg 15deg);
+  -webkit-mask:radial-gradient(circle,#000 0,#000 30%,transparent 62%);mask:radial-gradient(circle,#000 0,#000 30%,transparent 62%)}
+.h{font-weight:900;line-height:1.02;letter-spacing:-1.5px}
+.w{display:inline-block;will-change:transform,opacity}
+.chip{display:inline-flex;align-items:center;gap:16px;background:#fff;border-radius:60px;padding:16px 34px 16px 22px;
+  font-weight:800;font-size:38px;color:var(--maroon);box-shadow:0 14px 34px rgba(90,20,20,.18);letter-spacing:.5px}
+.chip .ic{width:52px;height:52px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center}
+.frame{background:#fff;padding:14px;border-radius:36px;box-shadow:0 28px 60px rgba(60,10,10,.30)}
+.frame .in{overflow:hidden;border-radius:24px;position:relative}
+.frame img{width:100%;height:100%;object-fit:cover;display:block;will-change:transform}
+.card{background:#fff;border-radius:34px;box-shadow:0 22px 50px rgba(90,20,20,.18)}
+.dot{position:absolute;border-radius:50%}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- ============ SCENE 1 — HOOK ============ -->
+<div class="scene bg-cream" id="s1">
+  <div class="rays" id="s1rays" style="background:repeating-conic-gradient(rgba(240,124,27,.07) 0 6deg,transparent 6deg 15deg)"></div>
+  <div class="abs center" id="h_loc" style="top:210px"><span class="chip"><span class="ic"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#fff" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span><span data-t="loc"></span></span></div>
+  <div class="abs center h" id="h1" style="top:340px">
+    <div style="font-size:112px;color:var(--maroon)" data-words="h1a"></div>
+    <div style="font-size:138px;color:var(--orange)" data-words="h1b"></div>
+  </div>
+  <div class="abs center h" id="h2" style="top:340px">
+    <div style="font-size:108px;color:var(--maroon)" data-words="h2a"></div>
+    <div style="font-size:132px;color:var(--orange)" data-words="h2b"></div>
+  </div>
+  <!-- clock -->
+  <div class="abs" id="clock" style="left:300px;top:720px;width:480px;height:480px">
+    <svg width="480" height="480" viewBox="0 0 480 480">
+      <circle cx="240" cy="250" r="214" fill="rgba(122,30,44,.12)"/>
+      <circle cx="240" cy="240" r="214" fill="#fff" stroke="var(--maroon)" stroke-width="20"/>
+      <g id="ticks"></g>
+      <line id="hHand" x1="240" y1="240" x2="240" y2="132" stroke="var(--maroon)" stroke-width="18" stroke-linecap="round"/>
+      <line id="mHand" x1="240" y1="240" x2="240" y2="80" stroke="var(--orange)" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="240" cy="240" r="16" fill="var(--maroon)"/>
+    </svg>
+  </div>
+  <div class="abs center" id="clockLbl" style="top:1240px"><span class="chip" style="background:var(--maroon);color:#fff;font-size:42px;padding:18px 40px">12:30 PM &nbsp;•&nbsp; <span data-t="lunchLbl"></span></span></div>
+  <!-- search -->
+  <div class="abs card" id="search" style="left:110px;top:930px;width:860px;height:132px;border-radius:70px;display:flex;align-items:center;padding:0 40px;gap:26px">
+    <svg width="54" height="54" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#F07C1B" stroke-width="2.6"/><line x1="15.5" y1="15.5" x2="21" y2="21" stroke="#F07C1B" stroke-width="2.8" stroke-linecap="round"/></svg>
+    <span id="typed" style="font-size:46px;font-weight:700;color:var(--ink)"></span><span id="caret" style="width:4px;height:56px;background:var(--orange);margin-left:-22px"></span>
+  </div>
+  <div class="abs card" id="sugg" style="left:110px;top:1086px;width:860px;height:150px;border-radius:40px;display:flex;align-items:center;padding:0 34px;gap:26px;border:5px solid var(--orange)">
+    <div style="width:84px;height:84px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;flex:none"><svg width="46" height="46" viewBox="0 0 24 24"><path fill="#fff" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
+    <div><div style="font-size:46px;font-weight:900;color:var(--maroon);line-height:1.1">Chicken N Chicken</div><div style="font-size:32px;font-weight:700;color:#9a6a5a" data-t="loc2"></div></div>
+  </div>
+  <div class="abs" id="tap" style="left:0;top:0;width:120px;height:120px;border-radius:50%;border:8px solid var(--orange)"></div>
+  <div class="abs" id="q1" style="left:120px;top:780px"><div class="qb">?</div></div>
+  <div class="abs" id="q2" style="left:840px;top:720px"><div class="qb" style="background:var(--maroon)">?</div></div>
+  <div class="abs" id="q3" style="left:880px;top:1330px"><div class="qb" style="width:96px;height:96px;font-size:58px">?</div></div>
+  <div class="abs" id="q4" style="left:150px;top:1340px"><div class="qb" style="background:#fff;border:6px solid var(--orange)"><svg width="54" height="54" viewBox="0 0 24 24"><path fill="#F07C1B" d="M7 2v8a2 2 0 0 0 2 2v10h2V12a2 2 0 0 0 2-2V2h-1.5v6h-1V2H9v6H8V2H7zm9.5 0C15 2 14 4 14 7v6h2v9h2V2h-1.5z"/></svg></div></div>
+</div>
+
+<!-- ============ SCENE 2 — INTRO ============ -->
+<div class="scene bg-maroon" id="s2">
+  <div class="rays" id="s2rays"></div>
+  <div class="abs center h" id="i1" style="top:200px">
+    <div style="font-size:82px;color:#fff" data-words="i1a"></div>
+    <div style="font-size:74px;color:var(--yellow)" data-words="i1b"></div>
+  </div>
+  <div class="abs" id="i_logo" style="left:150px;top:430px;width:780px;height:200px;background:#fff;border-radius:32px;box-shadow:0 20px 50px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;overflow:hidden">
+    <img src="../assets/photos/logo.jpg" style="width:740px;display:block">
+  </div>
+  <div class="abs frame" id="i_photo" style="left:230px;top:670px;width:620px">
+    <div class="in" style="width:592px;height:760px"><img id="i_photo_img" src="../assets/photos/storefront.png" style="object-position:50% 40%"></div>
+  </div>
+  <div class="abs" id="i_badge" style="left:735px;top:1130px;width:280px;height:280px">
+    <div style="width:280px;height:280px;border-radius:50%;background:var(--orange);border:8px dashed rgba(255,255,255,.75);outline:10px solid var(--orange);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;color:#fff;font-size:44px;line-height:1.05;box-shadow:0 18px 40px rgba(0,0,0,.35)" data-t="badge"></div>
+  </div>
+  <div class="abs" id="i_pin" style="left:490px;top:1340px;width:100px;height:130px">
+    <svg width="100" height="130" viewBox="0 0 24 31"><path fill="#F07C1B" stroke="#fff" stroke-width="1.4" d="M12 1a10 10 0 0 0-10 10c0 7.5 10 18 10 18s10-10.5 10-18A10 10 0 0 0 12 1z"/><circle cx="12" cy="11" r="4" fill="#fff"/></svg>
+  </div>
+  <div class="abs center" id="i_loc" style="top:1490px"><span class="chip" style="font-size:42px"><span class="ic"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#fff" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span><span data-t="loc"></span></span></div>
+</div>
+
+<!-- ============ SCENE 3 — MAIN 1 ============ -->
+<div class="scene bg-cream" id="s3">
+  <div class="rays" id="s3rays" style="background:repeating-conic-gradient(rgba(240,124,27,.06) 0 6deg,transparent 6deg 15deg)"></div>
+  <div class="abs center h" id="m1h" style="top:190px">
+    <div style="font-size:108px;color:var(--maroon)" data-words="m1a"></div>
+    <div style="font-size:124px;color:var(--orange)" data-words="m1b"></div>
+    <svg id="swoosh" width="560" height="40" viewBox="0 0 560 40" style="display:block;margin:0 auto"><path id="swooshPath" d="M10 28 C150 6 380 4 550 22" fill="none" stroke="#FFC94A" stroke-width="12" stroke-linecap="round"/></svg>
+  </div>
+  <!-- food collage -->
+  <div class="abs frame" id="f_burger" style="left:320px;top:500px;width:440px;z-index:3"><div class="in" style="width:412px;height:520px"><img src="../assets/crops/burger.jpg"></div></div>
+  <div class="abs frame" id="f_fries" style="left:50px;top:610px;width:320px;z-index:2"><div class="in" style="width:292px;height:330px"><img src="../assets/crops/fries.jpg"></div></div>
+  <div class="abs frame" id="f_sand" style="left:700px;top:560px;width:340px;z-index:2"><div class="in" style="width:312px;height:200px"><img src="../assets/crops/sandwich.jpg"></div></div>
+  <div class="abs frame" id="f_tend" style="left:250px;top:960px;width:600px;z-index:4"><div class="in" style="width:572px;height:200px"><img src="../assets/crops/tenders.jpg"></div></div>
+  <!-- counter -->
+  <div class="abs frame" id="f_ctr" style="left:250px;top:505px;width:580px"><div class="in" style="width:552px;height:680px"><img id="f_ctr_img" src="../assets/photos/counter.jpg" style="object-position:50% 62%"></div></div>
+  <!-- food row + pickup -->
+  <div class="abs frame" id="f_row" style="left:50px;top:545px;width:980px"><div class="in" style="width:952px;height:210px"><img id="f_row_img" src="../assets/crops/foodrow.jpg"></div></div>
+  <div class="abs frame" id="f_pick" style="left:190px;top:820px;width:700px"><div class="in" style="width:672px;height:350px"><img id="f_pick_img" src="../assets/crops/pickup.jpg"></div></div>
+  <!-- storefront -->
+  <div class="abs frame" id="f_store" style="left:290px;top:500px;width:500px"><div class="in" style="width:472px;height:690px"><img id="f_store_img" src="../assets/photos/storefront.png" style="object-position:50% 45%"></div></div>
+  <div class="abs" id="f_tag" style="left:620px;top:960px"><span class="chip" style="background:var(--orange);color:#fff;font-size:40px;padding:16px 32px" data-t="singgah"></span></div>
+  <!-- checklist -->
+  <div class="abs card" id="list" style="left:80px;top:1235px;width:920px;padding:26px 34px">
+    <div class="row" id="r0"></div><div class="row" id="r1"></div><div class="row" id="r2"></div>
+  </div>
+</div>
+
+<!-- ============ SCENE 4 — MAIN 2 (map + notebook) ============ -->
+<div class="scene" id="s4" style="background:#F5E9D6">
+  <div id="mapWrap" style="position:absolute;inset:0;transform-origin:540px 980px">
+    <svg id="map" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;inset:0"></svg>
+    <svg id="route" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;inset:0">
+      <path id="routePath" d="M250 1420 C 260 1240, 420 1250, 470 1150 S 520 1040, 540 1000" fill="none" stroke="#7A1E2C" stroke-width="14" stroke-linecap="round" stroke-dasharray="4 30"/>
+    </svg>
+    <div class="abs" id="office" style="left:180px;top:1400px;width:140px;height:150px">
+      <svg width="140" height="150" viewBox="0 0 140 150"><ellipse cx="70" cy="140" rx="56" ry="9" fill="rgba(0,0,0,.15)"/><rect x="22" y="20" width="96" height="120" rx="10" fill="#7A1E2C"/><g fill="#FFC94A"><rect x="36" y="36" width="18" height="16" rx="3"/><rect x="61" y="36" width="18" height="16" rx="3"/><rect x="86" y="36" width="18" height="16" rx="3"/><rect x="36" y="62" width="18" height="16" rx="3"/><rect x="61" y="62" width="18" height="16" rx="3"/><rect x="86" y="62" width="18" height="16" rx="3"/><rect x="36" y="88" width="18" height="16" rx="3"/><rect x="86" y="88" width="18" height="16" rx="3"/></g><rect x="58" y="108" width="24" height="32" rx="4" fill="#fff"/></svg>
+    </div>
+    <div class="abs" id="officeLbl" style="left:110px;top:1560px"><span class="chip" style="font-size:32px;padding:12px 26px" data-t="office"></span></div>
+    <div class="abs" id="ripple" style="left:390px;top:850px;width:300px;height:300px"></div>
+    <div class="abs" id="m_pin" style="left:470px;top:820px;width:140px;height:182px">
+      <svg width="140" height="182" viewBox="0 0 24 31"><path fill="#7A1E2C" stroke="#fff" stroke-width="1.2" d="M12 1a10 10 0 0 0-10 10c0 7.5 10 18 10 18s10-10.5 10-18A10 10 0 0 0 12 1z"/><circle cx="12" cy="11" r="5" fill="#F07C1B"/></svg>
+    </div>
+    <div class="abs card" id="m_lbl" style="left:330px;top:640px;padding:22px 30px;border-radius:28px">
+      <div style="font-size:38px;font-weight:900;color:var(--maroon);line-height:1.1">Chicken N Chicken</div>
+      <div style="font-size:30px;font-weight:700;color:var(--orange)" data-t="loc"></div>
+    </div>
+  </div>
+  <div id="mapDim" style="position:absolute;inset:0;background:#2a0a10;opacity:0"></div>
+  <div class="abs center" id="m2h" style="top:220px"><span class="chip h" style="font-size:66px;padding:26px 50px;background:var(--maroon);color:#fff;border-radius:80px" data-t="m2h"></span></div>
+  <!-- notebook -->
+  <div class="abs" id="note" style="left:120px;top:760px;width:840px;height:760px">
+    <div style="position:absolute;inset:0;background:#fff;border-radius:22px;box-shadow:0 30px 70px rgba(0,0,0,.35);
+       background-image:repeating-linear-gradient(#fff 0 86px,#cfe0f5 86px 89px);background-position:0 120px;overflow:hidden">
+      <div style="position:absolute;left:96px;top:0;bottom:0;width:4px;background:#f2a3a3"></div>
+    </div>
+    <div id="rings" style="position:absolute;left:40px;right:40px;top:-26px;display:flex;justify-content:space-between"></div>
+    <div style="position:absolute;left:130px;top:70px;font-size:46px;font-weight:800;color:var(--maroon)" data-t="noteTitle"></div>
+    <div id="hand" style="position:absolute;left:150px;top:228px;font-family:Hand;font-size:90px;color:var(--maroon);white-space:nowrap;clip-path:inset(0 100% 0 0)">Chicken N Chicken</div>
+    <div id="hand2" style="position:absolute;left:170px;top:380px;font-family:Hand;font-size:60px;color:var(--orange);white-space:nowrap;clip-path:inset(0 100% 0 0)" data-t="noteSub"></div>
+    <svg id="check" style="position:absolute;left:40px;top:250px" width="100" height="100" viewBox="0 0 100 100"><path id="checkPath" d="M14 52 L40 78 L88 20" fill="none" stroke="#2BA84A" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="130" stroke-dashoffset="130"/></svg>
+    <div id="stamp" style="position:absolute;left:480px;top:500px;width:300px;height:190px;border:9px solid var(--orange);border-radius:30px;display:flex;align-items:center;justify-content:center;text-align:center;
+       color:var(--orange);font-weight:900;font-size:50px;line-height:1.02;opacity:0" data-t="stamp"></div>
+  </div>
+</div>
+
+<!-- ============ SCENE 5 — CTA 1 ============ -->
+<div class="scene bg-orange" id="s5">
+  <div class="rays" id="s5rays" style="background:repeating-conic-gradient(rgba(255,255,255,.10) 0 6deg,transparent 6deg 15deg)"></div>
+  <div class="abs center h" id="c1a" style="top:220px;font-size:76px;color:#fff;text-shadow:0 6px 0 rgba(122,30,44,.35)" data-words="c1a"></div>
+  <div class="abs center h" id="c1b" style="top:320px;font-size:58px;color:var(--maroon)" data-words="c1b"></div>
+  <div class="abs center h" id="c1c" style="top:262px;font-size:100px;color:#fff;text-shadow:0 10px 0 var(--maroon)" data-words="c1c"></div>
+  <div class="abs frame" id="c_photo" style="left:250px;top:470px;width:580px"><div class="in" style="width:552px;height:760px"><img id="c_photo_img" src="../assets/photos/storefront.png" style="object-position:50% 40%"></div></div>
+  <div class="abs center" id="c_loc" style="top:1300px"><span class="chip" style="font-size:42px"><span class="ic" style="background:var(--maroon)"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#fff" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span><span data-t="loc"></span></span></div>
+</div>
+
+<!-- ============ SCENE 6 — END CARD ============ -->
+<div class="scene bg-maroon" id="s6">
+  <div class="rays" id="s6rays"></div>
+  <svg class="abs" id="burst" width="1080" height="1080" viewBox="0 0 1080 1080" style="left:0;top:330px"></svg>
+  <div class="abs" id="e_logo" style="left:70px;top:640px;width:940px;height:260px;background:#fff;border-radius:40px;box-shadow:0 26px 60px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;overflow:hidden">
+    <img src="../assets/photos/logo.jpg" style="width:900px;display:block">
+  </div>
+  <div class="abs center" id="e_loc" style="top:960px">
+    <div style="display:inline-flex;align-items:center;gap:14px;font-weight:800;font-size:44px;letter-spacing:4px;color:#fff">
+      <svg width="44" height="44" viewBox="0 0 24 24"><path fill="#F5A02A" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span data-t="loc"></span></div>
+  </div>
+  <div class="abs center" id="e_tag" style="top:1060px;font-weight:800;font-style:italic;font-size:62px;color:var(--yellow);line-height:1.15" data-t="tag"></div>
+</div>
+
+<div id="dots" style="position:absolute;inset:0;pointer-events:none"></div>
+</div>
+
+<style>
+.qb{width:120px;height:120px;border-radius:50%;background:var(--orange);color:#fff;font-weight:900;font-size:76px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px rgba(90,20,20,.25)}
+.row{display:flex;align-items:center;gap:22px;height:84px;font-size:38px;white-space:nowrap;font-weight:800;color:var(--maroon)}
+.row .bx{width:58px;height:58px;border-radius:16px;border:5px solid #e3c9b0;display:flex;align-items:center;justify-content:center;flex:none}
+.row .ico{width:62px;height:62px;border-radius:50%;background:#FFF0DE;display:flex;align-items:center;justify-content:center;flex:none}
+.row .txt{flex:1}
+.ring{width:34px;height:64px;border-radius:18px;border:8px solid #9a9a9a;background:linear-gradient(#ddd,#bbb)}
+</style>
+
+<script>
+// ---------------------------------------------------------------- copy (BM / EN)
+const COPY = {
+  bm: { loc:"CHOW KIT, KUALA LUMPUR", loc2:"Chow Kit, Kuala Lumpur", h1a:"KERJA AREA", h1b:"CHOW KIT?", h2a:"TAK TAHU NAK", h2b:"MAKAN APA?",
+        lunchLbl:"WAKTU LUNCH", search:"lunch apa hari ni?", i1a:"CHICKEN N CHICKEN", i1b:"DAH ADA DI CHOW KIT!", badge:"CAWANGAN<br>BAHARU!",
+        m1a:"LUNCH TIME?", m1b:"JOM SINGGAH!", rows:["Makan tengah hari","Makan bersama kawan pejabat","Isi perut lepas penat bekerja"],
+        singgah:"Singgah sini!", m2h:"TAK PERLU PERGI JAUH!", office:"Pejabat korang", noteTitle:"Senarai Tempat Makan", noteSub:"@ Chow Kit, Kuala Lumpur",
+        stamp:"WAJIB<br>SINGGAH!", c1a:"WARGA KUALA LUMPUR", c1b:"& PEKERJA SEKITAR CHOW KIT", c1c:"JEMPUT DATANG!", tag:"Sekarang lebih dekat<br>dengan korang!" },
+  en: { loc:"CHOW KIT, KUALA LUMPUR", loc2:"Chow Kit, Kuala Lumpur", h1a:"WORK AROUND", h1b:"CHOW KIT?", h2a:"NOT SURE WHAT", h2b:"TO EAT?",
+        lunchLbl:"LUNCH BREAK", search:"what's for lunch today?", i1a:"CHICKEN N CHICKEN", i1b:"IS NOW IN CHOW KIT!", badge:"NEW<br>BRANCH!",
+        m1a:"LUNCH TIME?", m1b:"DROP BY!", rows:["Lunch break meals","Eat out with colleagues","Refuel after a long day"],
+        singgah:"Drop by here!", m2h:"NO NEED TO GO FAR!", office:"Your office", noteTitle:"Places to Eat", noteSub:"@ Chow Kit, Kuala Lumpur",
+        stamp:"MUST<br>VISIT!", c1a:"TO EVERYONE IN KL", c1b:"& THOSE WORKING IN CHOW KIT", c1c:"COME ON DOWN!", tag:"Now closer<br>to you!" }
+};
+
+// ---------------------------------------------------------------- helpers
+const TL = window.TL;
+const C = COPY[TL.lang];
+const S = TL.segments;
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const E = {
+  out: p => 1 - Math.pow(1 - p, 3),
+  in: p => p * p * p,
+  io: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+  back: p => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); },
+  bounce: p => { const n = 7.5625, d = 2.75; if (p < 1 / d) return n * p * p; if (p < 2 / d) return n * (p -= 1.5 / d) * p + .75;
+                 if (p < 2.5 / d) return n * (p -= 2.25 / d) * p + .9375; return n * (p -= 2.625 / d) * p + .984375; },
+};
+const P = (t, a, d) => clamp((t - a) / d);
+let rnd = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+
+// SFX cue list (exported to the audio mixer)
+window.SFX_CUES = [];
+const cue = (t, type, gain = 1, dur = 0) => window.SFX_CUES.push({ t: +t.toFixed(3), type, gain, dur });
+
+function setT(el, x, y, s, r, o) {
+  el.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;
+  el.style.opacity = o;
+}
+// generic enter / exit animation
+function show(el, t, tin, tout, o = {}) {
+  if (typeof el === 'string') el = $(el);
+  const din = o.din ?? .55, dout = o.dout ?? .35;
+  if (t < tin || (tout != null && t >= tout + dout)) { el.style.visibility = 'hidden'; return 0; }
+  el.style.visibility = 'visible';
+  let x = o.x || 0, y = o.y || 0, s = o.s ?? 1, r = o.r || 0, op = 1;
+  const pi = P(t, tin, din), po = tout == null ? 0 : P(t, tout, dout);
+  const ei = E.out(pi);
+  switch (o.in || 'pop') {
+    case 'pop':   s *= .3 + .7 * E.back(pi); op *= clamp(pi * 3); break;
+    case 'up':    y += 110 * (1 - ei); op *= ei; break;
+    case 'down':  y -= 110 * (1 - ei); op *= ei; break;
+    case 'left':  x -= 260 * (1 - ei); op *= ei; break;
+    case 'right': x += 260 * (1 - ei); op *= ei; break;
+    case 'fly':   y += 1300 * (1 - ei); r += 10 * (1 - ei); break;
+    case 'drop':  y -= 500 * (1 - E.bounce(pi)); op *= clamp(pi * 5); break;
+    case 'fade':  op *= ei; break;
+    case 'zoom':  s *= 1.35 - .35 * ei; op *= ei; break;
+    case 'stamp': s *= 2.4 - 1.4 * E.out(pi); op *= clamp(pi * 3); r += -8 * (1 - ei); break;
+    case 'none':  break;
+  }
+  if (po > 0) {
+    const eo = E.io(po);
+    switch (o.out || 'fade') {
+      case 'fade':  op *= 1 - po; s *= 1 - .06 * eo; break;
+      case 'up':    y -= 140 * eo; op *= 1 - po; break;
+      case 'down':  y += 160 * eo; op *= 1 - po; break;
+      case 'left':  x -= 1200 * eo; break;
+      case 'right': x += 1200 * eo; break;
+      case 'pop':   s *= 1 - .9 * eo; op *= 1 - E.in(po); break;
+      case 'none':  break;
+    }
+  }
+  if (o.float) { y += Math.sin((t + o.float) * 1.6) * 7; r += Math.sin((t + o.float) * 1.1) * .6; }
+  setT(el, x, y, s, r, op);
+  return pi;
+}
+// word-by-word pop for elements built with data-words
+function words(el, t, tin, stagger = .14, din = .45) {
+  if (typeof el === 'string') el = $(el);
+  el.querySelectorAll('.w').forEach((w, i) => {
+    const p = P(t, tin + i * stagger, din);
+    const s = .2 + .8 * E.back(p);
+    w.style.transform = `translateY(${(1 - E.out(p)) * 40}px) scale(${s})`;
+    w.style.opacity = clamp(p * 3);
+  });
+}
+function kb(img, t, a, b, s0, s1, dx = 0, dy = 0) {     // Ken Burns
+  const p = E.io(P(t, a, b - a));
+  img.style.transform = `translate(${dx * p}px,${dy * p}px) scale(${lerp(s0, s1, p)})`;
+}
+function sceneVis(id, t, a, b, mode, dur = .5) {       // scene window + entrance transition
+  const el = $(id);
+  if (t < a || t >= b) { el.style.visibility = 'hidden'; return; }
+  el.style.visibility = 'visible';
+  const p = E.io(P(t, a, dur));
+  el.style.clipPath = ''; el.style.transform = ''; el.style.filter = '';
+  if (mode && mode.startsWith('circle')) {
+    const [cx, cy] = mode.split(':').slice(1).map(Number);
+    el.style.clipPath = p < 1 ? `circle(${p * 2300}px at ${cx || 540}px ${cy || 960}px)` : '';
+  } else if (mode === 'slide') {
+    el.style.transform = p < 1 ? `translateX(${(1 - p) * 1080}px)` : '';
+    const bl = Math.sin(p * Math.PI) * 10; if (bl > .3) el.style.filter = `blur(${bl}px)`;
+  } else if (mode === 'up') {
+    el.style.transform = p < 1 ? `translateY(${(1 - p) * 1920}px)` : '';
+  }
+}
+function slideOut(id, t, a, dur = .5) {                 // previous scene leaving during whip
+  const el = $(id); const p = E.io(P(t, a, dur));
+  if (t >= a && p < 1) { el.style.transform = `translateX(${-p * 1080}px)`; const bl = Math.sin(p * Math.PI) * 10; el.style.filter = bl > .3 ? `blur(${bl}px)` : ''; }
+}
+
+// ---------------------------------------------------------------- build DOM bits
+document.querySelectorAll('[data-t]').forEach(e => e.innerHTML = C[e.dataset.t]);
+document.querySelectorAll('[data-words]').forEach(e => {
+  e.innerHTML = C[e.dataset.words].split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+});
+{ // clock ticks
+  let g = ''; for (let i = 0; i < 12; i++) { const a = i * 30 * Math.PI / 180, r1 = i % 3 ? 182 : 168, r2 = 196;
+    g += `<line x1="${240 + Math.sin(a) * r1}" y1="${240 - Math.cos(a) * r1}" x2="${240 + Math.sin(a) * r2}" y2="${240 - Math.cos(a) * r2}" stroke="#7A1E2C" stroke-width="${i % 3 ? 6 : 10}" stroke-linecap="round"/>`; }
+  $('ticks').innerHTML = g;
+}
+{ // checklist rows
+  const icons = [
+    '<path fill="#F07C1B" d="M7 2v8a2 2 0 0 0 2 2v10h2V12a2 2 0 0 0 2-2V2h-1.5v6h-1V2H9v6H8V2H7zm9.5 0C15 2 14 4 14 7v6h2v9h2V2h-1.5z"/>',
+    '<path fill="#F07C1B" d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm7 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM9 13c-3.3 0-7 1.6-7 4v3h14v-3c0-2.4-3.7-4-7-4zm7 0c-.4 0-.8 0-1.2.1 1.3.9 2.2 2.2 2.2 3.9v3h5v-3c0-2.4-3-4-6-4z"/>',
+    '<path fill="#F07C1B" d="M3 8h15a1 1 0 0 1 1 1v1h1.5a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H19v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1zm1 2v4h4.5v-4H4zm5.5 0v4H13v-4H9.5z"/>'];
+  C.rows.forEach((txt, i) => {
+    $('r' + i).innerHTML = `<div class="bx"><svg width="40" height="40" viewBox="0 0 100 100"><path class="ck" d="M14 52 L40 78 L88 20" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="130" stroke-dashoffset="130"/></svg></div>
+      <div class="ico"><svg width="38" height="38" viewBox="0 0 24 24">${icons[i]}</svg></div><div class="txt">${txt}</div>`;
+  });
+}
+{ // notebook rings
+  let h = ''; for (let i = 0; i < 9; i++) h += '<div class="ring"></div>'; $('rings').innerHTML = h;
+}
+{ // stylised map (generic — no real streets named)
+  let m = '';
+  for (let i = 0; i < 70; i++) { const x = rnd() * 1100 - 20, y = rnd() * 1950 - 20, w = 70 + rnd() * 140, h = 60 + rnd() * 140;
+    m += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${rnd() < .18 ? '#CFE6BF' : '#EEDCC2'}"/>`; }
+  m += `<path d="M-40 560 C 220 520, 360 640, 620 600 S 960 520, 1120 560" fill="none" stroke="#A9D4EE" stroke-width="46"/>`;
+  const roads = ['M-20 1000 L1100 1000', 'M540 -20 L540 1940', 'M-20 1420 C 300 1400, 700 1460, 1100 1380', 'M200 -20 C 240 600, 140 1200, 260 1940',
+                 'M860 -20 C 820 700, 940 1300, 860 1940', 'M-20 300 L1100 380', 'M-20 1720 L1100 1680', 'M380 -20 L320 1940'];
+  roads.forEach((d, i) => m += `<path d="${d}" fill="none" stroke="#fff" stroke-width="${i < 2 ? 46 : 30}" stroke-linecap="round"/>`);
+  m += `<path d="M-20 1000 L1100 1000" fill="none" stroke="#FFD27A" stroke-width="16"/>`;
+  $('map').innerHTML = m;
+}
+{ // burst lines for end card
+  let b = ''; for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2;
+    b += `<line class="bl" data-a="${a}" x1="540" y1="440" x2="540" y2="440" stroke="${i % 2 ? '#FFC94A' : '#F5A02A'}" stroke-width="14" stroke-linecap="round"/>`; }
+  $('burst').innerHTML = b;
+}
+{ // floating confetti dots
+  const cols = ['#F07C1B', '#FFC94A', '#7A1E2C', '#F5A02A'];
+  let h = ''; window.DOTS = [];
+  for (let i = 0; i < 26; i++) { const d = { x: rnd() * 1080, y: rnd() * 1920, r: 8 + rnd() * 14, sp: 20 + rnd() * 40, ph: rnd() * 6, c: cols[i % 4] };
+    DOTS.push(d); h += `<div class="dot" style="width:${d.r}px;height:${d.r}px;background:${d.c}"></div>`; }
+  $('dots').innerHTML = h;
+}
+
+// ---------------------------------------------------------------- key times
+const H = S.hook, I = S.intro, M1 = S.main1, M2 = S.main2, C1 = S.cta1, C2 = S.cta2, END = TL.total;
+const K = {};
+K.s2 = I.start - .32;                 // circle wipe into intro
+K.s3 = M1.start - .30;                // whip into main1
+K.s4 = M2.start - .30;                // circle wipe (from pin) into map
+K.s5 = C1.start - .30;                // slide up into CTA
+K.s6 = C2.start - .30;                // circle wipe to end card
+K.h2 = H.phrases[2];
+K.typeA = K.h2 + .25; K.typeB = Math.min(K.typeA + 1.15, H.end - .7);
+K.sugg = K.typeB + .2; K.tap = K.s2 - .30;
+const m1p = M1.phrases, m2p = M2.phrases, c1p = C1.phrases;
+K.m1v = [m1p[0] - .1, m1p[1] - .15, m1p[2] - .15, m1p[3] - .15, K.s4];   // visual sub-windows in main1
+
+// ---- SFX cue sheet
+cue(.12, 'pop', .8); cue(.6, 'pop', .9);
+[0, 1, 2, 3].forEach(i => cue(.3 + i * .16, 'tick', .5));
+cue(.85, 'whirl', .55, 1.2);
+cue(K.h2 - .05, 'whoosh', .6);
+for (let i = 0, n = C.search.length; i < n; i++) cue(K.typeA + (K.typeB - K.typeA) * i / n, 'key', .35);
+cue(K.sugg, 'pop', .8); cue(K.tap, 'tap', .9);
+cue(K.s2, 'whoosh', 1);
+cue(I.start + .05, 'pop', .9); cue(I.start + .3, 'swish', .7); cue(I.phrases[1] + 1.5, 'stamp', 1);
+cue(I.phrases[2] - .55, 'drop', .9);
+cue(K.s3, 'whoosh', 1);
+[0, .22, .44, .66].forEach(d => cue(K.m1v[0] + .25 + d, 'pop', .7));
+cue(K.m1v[0] + .4, 'sizzle', .35, 2.4);
+cue(K.m1v[1], 'swish', .7); cue(K.m1v[2], 'swish', .7); cue(K.m1v[2] + .2, 'sizzle', .3, 2.2); cue(K.m1v[3], 'swish', .7);
+cue(K.m1v[3] + .45, 'drop', .7);
+[0, 1, 2].forEach(i => cue(m1p[i] + .55, 'ding', .7));
+cue(K.s4, 'whoosh', 1); cue(m2p[0] + .15, 'drop', 1); cue(m2p[1] + .1, 'swish', .5);
+cue(m2p[2] - .25, 'swish', .9); cue(m2p[2] + .35, 'scribble', .55, 1.3); cue(m2p[2] + 1.75, 'ding', .7); cue(m2p[2] + 2.3, 'stamp', 1);
+cue(K.s5, 'whoosh', 1); cue(c1p[1] + .02, 'pop', .8); cue(c1p[2] + .02, 'pop', .8); cue(c1p[3] - .05, 'pop', 1); cue(C1.start + .1, 'swish', .6);
+cue(K.s6, 'whoosh', 1); cue(C2.start - .05, 'chime', 1); cue(C2.phrases[1] + .05, 'pop', .6);
+
+// ---------------------------------------------------------------- render(t)
+window.render = function (t) {
+  // ======== S1 HOOK
+  sceneVis('s1', t, 0, K.s2 + .55);
+  $('s1rays').style.transform = `rotate(${t * 6}deg)`;
+  show('h_loc', t, .1, null, { in: 'down', float: 0 });
+  show('h1', t, 0, K.h2 - .1, { in: 'none', out: 'up' }); words('h1', t, .3, .16);
+  show('h2', t, K.h2, null, { in: 'none' }); words('h2', t, K.h2, .14);
+  show('clock', t, .55, K.h2 - .1, { out: 'pop', float: 1 });
+  { const p = E.io(P(t, .85, 1.25)); const mins = lerp(10 * 60, 12 * 60 + 30, p);
+    $('mHand').setAttribute('transform', `rotate(${(mins % 60) * 6} 240 240)`);
+    $('hHand').setAttribute('transform', `rotate(${(mins / 60 % 12) * 30} 240 240)`); }
+  show('clockLbl', t, 1.5, K.h2 - .1, { in: 'up', out: 'fade' });
+  show('search', t, K.h2 + .05, null, { in: 'up' });
+  { const n = Math.round(C.search.length * P(t, K.typeA, K.typeB - K.typeA)); $('typed').textContent = C.search.slice(0, n);
+    $('caret').style.opacity = (t < K.typeB + .1 || Math.floor(t * 3) % 2) ? 1 : 0; }
+  show('sugg', t, K.sugg, null, { in: 'up', din: .4 });
+  { const el = $('tap'); const p = P(t, K.tap, .45);
+    if (t >= K.tap && p < 1) { el.style.visibility = 'visible'; el.style.left = '440px'; el.style.top = '1101px';
+      setT(el, 0, 0, .3 + 1.6 * E.out(p), 0, 1 - p); } else el.style.visibility = 'hidden'; }
+  ['q1', 'q2', 'q3', 'q4'].forEach((q, i) => show(q, t, K.h2 + .15 + i * .14, null, { float: i * 1.7 }));
+
+  // ======== S2 INTRO
+  sceneVis('s2', t, K.s2, K.s3 + .55, 'circle:540:1161');
+  slideOut('s2', t, K.s3);
+  $('s2rays').style.transform = `rotate(${t * 8}deg)`;
+  show('i_logo', t, I.start, null, { float: .4 });
+  words('i1', t, I.phrases[1] - .05, .12); show('i1', t, K.s2, null, { in: 'none' });
+  show('i_photo', t, I.start + .3, null, { in: 'fly', din: .8, r: -2 });
+  kb($('i_photo_img'), t, I.start, K.s3 + .5, 1.0, 1.14, 0, 20);
+  show('i_badge', t, I.phrases[1] + 1.5, null, { in: 'stamp', din: .35, r: 12, float: 2 });
+  show('i_pin', t, I.phrases[2] - .55, null, { in: 'drop', din: .7 });
+  show('i_loc', t, I.phrases[2] - .35, null, { in: 'up' });
+
+  // ======== S3 MAIN 1
+  sceneVis('s3', t, K.s3, K.s4 + .55, 'slide');
+  $('s3rays').style.transform = `rotate(${t * 6}deg)`;
+  show('m1h', t, K.s3 + .2, null, { in: 'none' }); words('m1h', t, K.s3 + .25, .15);
+  { const p = E.out(P(t, K.s3 + .8, .5)); $('swooshPath').style.strokeDasharray = 600; $('swooshPath').style.strokeDashoffset = 600 * (1 - p); }
+  const v = K.m1v;
+  show('f_fries', t, v[0] + .25, v[1] - .05, { r: -9, out: 'left', float: .3, dout: .45 });
+  show('f_sand', t, v[0] + .47, v[1] - .05, { r: 8, out: 'right', float: 1.3, dout: .45 });
+  show('f_burger', t, v[0] + .69, v[1] - .05, { r: -1, out: 'down', float: 2.1, dout: .4 });
+  show('f_tend', t, v[0] + .91, v[1] - .05, { r: -3, out: 'down', float: .8, dout: .4 });
+  show('f_ctr', t, v[1], v[2] - .05, { in: 'zoom', r: 1.5, out: 'fade' });
+  kb($('f_ctr_img'), t, v[1], v[2] + .3, 1.12, 1.0, 0, 0);
+  show('f_row', t, v[2], v[3] - .05, { in: 'left', r: -1.5, out: 'fade', float: .2 });
+  kb($('f_row_img'), t, v[2], v[3] + .3, 1.18, 1.05, 40, 0);
+  show('f_pick', t, v[2] + .25, v[3] - .05, { in: 'right', r: 2, out: 'fade', float: 1.1 });
+  kb($('f_pick_img'), t, v[2], v[3] + .3, 1.0, 1.1, 0, 0);
+  show('f_store', t, v[3], null, { in: 'zoom', r: -1.5, float: .5 });
+  kb($('f_store_img'), t, v[3], K.s4 + .5, 1.0, 1.12, 0, 15);
+  show('f_tag', t, v[3] + .45, null, { in: 'pop', r: 6, float: 2.5 });
+  show('list', t, m1p[0] + .3, null, { in: 'up' });
+  [0, 1, 2].forEach(i => {
+    const row = $('r' + i); const p = P(t, m1p[i] + .35, .4), pk = P(t, m1p[i] + .55, .3);
+    row.style.opacity = .25 + .75 * E.out(p); row.style.transform = `translateX(${(1 - E.out(p)) * 30}px)`;
+    const bx = row.querySelector('.bx'); bx.style.background = pk > 0 ? '#2BA84A' : '#fff'; bx.style.borderColor = pk > 0 ? '#2BA84A' : '#e3c9b0';
+    bx.style.transform = `scale(${1 + .25 * Math.sin(pk * Math.PI)})`;
+    row.querySelector('.ck').style.strokeDashoffset = 130 * (1 - E.out(pk));
+  });
+
+  // ======== S4 MAIN 2 — map + notebook
+  sceneVis('s4', t, K.s4, K.s5 + .55, 'circle:540:880');
+  { const z = lerp(1, 1.12, E.io(P(t, m2p[1], 1.8))); $('mapWrap').style.transform = `scale(${z})`; }
+  show('m2h', t, K.s4 + .25, null, { in: 'pop' });
+  show('office', t, K.s4 + .45, null, { in: 'pop', float: .6 });
+  show('officeLbl', t, K.s4 + .65, null, { in: 'up' });
+  { const p = E.io(P(t, m2p[0] + .2, 1.3)); const rp = $('routePath'); const L = 1100;
+    rp.style.strokeDasharray = '4 30'; rp.setAttribute('stroke-dashoffset', 0);
+    rp.parentNode.style.clipPath = `inset(${(1 - p) * 100}% 0 0 0)`; rp.parentNode.style.opacity = p > 0 ? 1 : 0; }
+  show('m_pin', t, m2p[0] + .15, null, { in: 'drop', din: .7 });
+  { const el = $('ripple'); if (t > m2p[0] + .6) { el.style.visibility = 'visible';
+      let h = ''; for (let k = 0; k < 3; k++) { const ph = ((t - m2p[0] - .6) * .7 + k / 3) % 1;
+        h += `<div style="position:absolute;left:${150 - 150 * ph}px;top:${150 - 150 * ph * .55}px;width:${300 * ph}px;height:${300 * ph * .55}px;border-radius:50%;border:6px solid rgba(240,124,27,${1 - ph})"></div>`; }
+      el.innerHTML = h; el.style.opacity = 1; el.style.transform = 'translateY(140px)'; } else el.style.visibility = 'hidden'; }
+  show('m_lbl', t, m2p[1] - .05, null, { in: 'left', float: 1 });
+  $('mapDim').style.opacity = .35 * E.out(P(t, m2p[2] - .3, .5));
+  show('note', t, m2p[2] - .3, null, { in: 'fly', din: .7, r: -2 });
+  { const p = P(t, m2p[2] + .35, 1.1); $('hand').style.clipPath = `inset(-20px ${(1 - p) * 100}% -20px 0)`;
+    const p2 = P(t, m2p[2] + 1.25, .6); $('hand2').style.clipPath = `inset(-20px ${(1 - p2) * 100}% -20px 0)`;
+    $('checkPath').style.strokeDashoffset = 130 * (1 - E.out(P(t, m2p[2] + 1.7, .35)));
+    const ps = P(t, m2p[2] + 2.25, .3); const st = $('stamp');
+    st.style.opacity = clamp(ps * 3); st.style.transform = `rotate(${-10 - 6 * (1 - ps)}deg) scale(${2.2 - 1.2 * E.out(ps)})`; }
+
+  // ======== S5 CTA 1
+  sceneVis('s5', t, K.s5, K.s6 + .55, 'up');
+  $('s5rays').style.transform = `rotate(${t * 9}deg)`;
+  show('c1a', t, c1p[1] - .05, c1p[3] - .2, { in: 'none', out: 'up' }); words('c1a', t, c1p[1], .1);
+  show('c1b', t, c1p[2] - .05, c1p[3] - .2, { in: 'none', out: 'up' }); words('c1b', t, c1p[2], .09);
+  show('c1c', t, c1p[3] - .1, null, { in: 'none' }); words('c1c', t, c1p[3] - .05, .16, .5);
+  show('c_photo', t, C1.start, null, { in: 'fly', din: .8, r: 2.5, float: .7 });
+  kb($('c_photo_img'), t, C1.start, K.s6 + .5, 1.15, 1.0, 0, 0);
+  show('c_loc', t, C1.start + .6, null, { in: 'up' });
+
+  // ======== S6 END CARD
+  sceneVis('s6', t, K.s6, 9999, 'circle:540:780');
+  $('s6rays').style.transform = `rotate(${t * 7}deg)`;
+  show('e_logo', t, C2.start - .1, null, { in: 'pop', din: .6, float: 0 });
+  { const p = P(t, C2.start, .7); const burst = $('burst'); burst.style.visibility = p > 0 && p < 1 ? 'visible' : 'hidden';
+    burst.querySelectorAll('.bl').forEach(l => { const a = +l.dataset.a; const r1 = 260 + 260 * E.out(p), r2 = 260 + 340 * E.out(clamp(p * 1.4));
+      l.setAttribute('x1', 540 + Math.cos(a) * r1); l.setAttribute('y1', 440 + Math.sin(a) * r1 * .55);
+      l.setAttribute('x2', 540 + Math.cos(a) * r2); l.setAttribute('y2', 440 + Math.sin(a) * r2 * .55); l.style.opacity = 1 - p; }); }
+  show('e_loc', t, C2.start + .35, null, { in: 'up' });
+  show('e_tag', t, C2.phrases[1] - .05, null, { in: 'pop' });
+
+  // ======== dots
+  const dd = $('dots').children;
+  DOTS.forEach((d, i) => { const y = ((d.y - t * d.sp) % 1920 + 1920) % 1920; const x = d.x + Math.sin(t * .8 + d.ph) * 18;
+    dd[i].style.transform = `translate(${x}px,${y}px)`; dd[i].style.opacity = .55; });
+};
+window.READY = document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.decode().catch(() => 0))));
+</script>
+</body>
+</html>
