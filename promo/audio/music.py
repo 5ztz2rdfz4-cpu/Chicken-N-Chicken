@@ -1,6 +1,6 @@
 import numpy as np, sys, wave
 from scipy.signal import butter, sosfilt, fftconvolve
-SR = 48000; DUR = 40.0; N = int(SR * DUR)
+SR = 48000; DUR = 37.1; N = int(SR * DUR)
 rng = np.random.default_rng(3)
 out_dir = sys.argv[1]
 
@@ -25,7 +25,7 @@ music = np.zeros(N); drums = np.zeros(N)
 chords = [[60, 64, 67], [59, 62, 67], [57, 60, 64], [57, 60, 65]]
 roots = [36, 43, 45, 41]
 nbars = int(DUR / bar) + 1
-END_T = 38.6  # music final hit region
+END_T = 35.7  # music final hit region
 
 # reverb IR
 irn = int(1.6 * SR); ir = rng.standard_normal(irn) * np.exp(-np.arange(irn) / SR / 0.45); ir = lp(ir, 6000); ir /= np.sqrt(np.sum(ir ** 2))
@@ -88,7 +88,7 @@ def bell(m, d=1.2):
     return (np.sin(2 * np.pi * f * tt) + 0.4 * np.sin(2 * np.pi * f * 2.76 * tt) * np.exp(-tt / 0.15) + 0.2 * np.sin(2 * np.pi * f * 5.4 * tt) * np.exp(-tt / 0.05)) * np.exp(-tt / 0.5) * np.minimum(1, tt / 0.002)
 motif = [(0, 79), (0.5, 76), (1, 79), (1.5, 84), (2.5, 83), (3, 79)]
 for off, m in motif: add(bell_bus, bell(m) * 0.5, 0.15 + off * beat)
-for off, m in [(0, 84), (0.5, 88), (1, 91), (2, 96)]: add(bell_bus, bell(m, 2.5) * 0.45, 34.4 + off * beat / 1.0)
+for off, m in [(0, 84), (0.5, 88), (1, 91), (2, 96)]: add(bell_bus, bell(m, 2.5) * 0.45, 31.5 + off * beat / 1.0)
 
 # final chord hit
 nn = int(3.0 * SR); tt = np.arange(nn) / SR
@@ -103,7 +103,7 @@ wet = fftconvolve(music + 0.3 * drums, ir)[:N] * 0.18
 mix = music + drums * 0.55 + wet
 # intro filter sweep for first 1.0s handled via fade
 fade = np.ones(N); fi = int(0.25 * SR); fade[:fi] = np.linspace(0, 1, fi)
-fo0 = int(39.2 * SR); fade[fo0:] = np.linspace(1, 0, N - fo0)
+fo0 = int(36.3 * SR); fade[fo0:] = np.linspace(1, 0, N - fo0)
 mix *= fade
 
 # ---------- SFX ----------
@@ -132,18 +132,18 @@ def impact():
     f = 40 + 80 * np.exp(-tt / 0.05); ph = 2 * np.pi * np.cumsum(f) / SR
     return np.sin(ph) * np.exp(-tt / 0.4) * 0.9 + lp(rng.standard_normal(nn), 1500) * np.exp(-tt / 0.15) * 0.3
 
-for t in [4.58, 19.43, 29.28]: add(sfx, whoosh(0.75), t - 0.05)
+for t in [4.58, 19.43, 26.38]: add(sfx, whoosh(0.75), t - 0.05)
 add(sfx, whoosh(0.7), 12.4)
-for t in [23.1, 26.25]: add(sfx, whoosh(0.5, False) * 0.6, t)
+for t in [23.1]: add(sfx, whoosh(0.5, False) * 0.6, t)
 pops = [(0.15, 700), (0.35, 800), (1.0, 900), (1.7, 1100), (1.92, 1200), (1.95, 900), (2.12, 1000), (3.45, 1000),
         (5.15, 800), (5.3, 900), (7.35, 700), (8.2, 1000), (13.95, 900), (14.8, 1050), (15.45, 1200), (17.1, 900), (17.25, 1000), (17.4, 1100), (17.55, 1200),
-        (20.15, 800), (20.45, 1000), (23.45, 800), (23.75, 1000), (24.05, 1100), (26.6, 800), (26.9, 1000),
-        (29.85, 800), (30.05, 900), (32.1, 1000), (35.3, 1000), (36.3, 900), (37.2, 1100)]
+        (20.15, 800), (20.45, 1000), (23.45, 800), (23.75, 1000), (24.05, 1100), 
+        (26.95, 800), (27.15, 900), (29.2, 1000), (32.4, 1000), (33.4, 900), (34.3, 1100)]
 for t, f in pops: add(sfx, pop(f), t)
 add(sfx, ding(), 5.6)
-add(sfx, riser(0.9), 32.95)
-add(sfx, impact(), 33.88)
-add(sfx, ding() * 1.2, 34.45)
+add(sfx, riser(0.9), 30.05)
+add(sfx, impact(), 30.98)
+add(sfx, ding() * 1.2, 31.55)
 
 def save(name, x):
     x = np.clip(x, -1, 1)

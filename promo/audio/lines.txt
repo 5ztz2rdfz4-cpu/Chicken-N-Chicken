@@ -2,6 +2,6 @@ s1|Weekend ni tak tahu nak bawa family ke mana? Jangan risau!
 s2|Jom singgah Chicken N Chicken, Kota Warisan, Sepang! Destinasi makan weekend untuk seisi keluarga.
 s3|Ruang makannya selesa, moden dan luas. Memang best untuk makan ramai-ramai dengan keluarga.
 s4a|Nak solat? Ada surau yang selesa.
-s4b|Nak bersantai? Ada taman mini.
+# removed: s4b|Nak bersantai? Ada taman mini.
 s4c|Anak-anak pula, boleh main puas-puas di playground!
 s5|Weekend ini, luangkan masa bersama keluarga di Chicken N Chicken, Sepang. Good food. Great family moments!
