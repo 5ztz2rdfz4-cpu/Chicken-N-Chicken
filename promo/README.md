@@ -1,6 +1,6 @@
 # Chicken N Chicken — 9:16 promo (37s)
 
-Final video: `../output/ChickenNChicken_Promo_9x16.mp4` (1080×1920, 30fps, H.264 + AAC, -14 LUFS).
+Final video: `../output/ChickenNChicken_Promo_9x16_v2.mp4` (1080×1920, 30fps, H.264 + AAC, -14 LUFS).
 
 ## Rebuild
 1. `npm install` (GSAP) in this folder.
