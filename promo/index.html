@@ -1,0 +1,484 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:P;font-weight:500;src:url(fonts/poppins-500.woff2)}
+@font-face{font-family:P;font-weight:600;src:url(fonts/poppins-600.woff2)}
+@font-face{font-family:P;font-weight:700;src:url(fonts/poppins-700.woff2)}
+@font-face{font-family:P;font-weight:800;src:url(fonts/poppins-800.woff2)}
+@font-face{font-family:P;font-weight:900;src:url(fonts/poppins-900.woff2)}
+@font-face{font-family:Script;src:url(fonts/pacifico.woff2)}
+:root{--mar:#8E1B2E;--mar2:#5C0F1C;--org:#F28C28;--org2:#E8641E;--yel:#FFC23D;--cream:#FFF6EA;--teal:#2BB3A3;--ink:#2A1C18}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:P,sans-serif;color:#fff}
+.scene{position:absolute;inset:0;overflow:hidden;visibility:hidden}
+.abs{position:absolute}
+.center{left:0;right:0;text-align:center}
+.w{display:inline-block;will-change:transform}
+.frame{position:absolute;border-radius:40px;overflow:hidden;border:12px solid #fff;box-shadow:0 30px 60px rgba(40,10,10,.35);background:#ddd}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shine{position:absolute;top:-20%;bottom:-20%;width:180px;left:-300px;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));transform:skewX(-18deg)}
+.blob{position:absolute;border-radius:50%}
+.pill{display:inline-flex;align-items:center;gap:16px;border-radius:999px;font-weight:800}
+svg{overflow:visible}
+/* calendar */
+#cal{left:220px;top:790px;width:640px;background:#fff;border-radius:40px;box-shadow:0 30px 60px rgba(120,40,0,.35);overflow:visible}
+#cal .hd{height:120px;background:var(--mar);border-radius:40px 40px 0 0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:46px;letter-spacing:4px;color:#fff;position:relative}
+#cal .ring{position:absolute;top:-26px;width:26px;height:64px;border-radius:14px;background:#5C0F1C;border:6px solid #fff}
+#cal .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;padding:22px 26px 30px}
+#cal .dl{font-weight:800;font-size:24px;color:#9b8a80;text-align:center}
+#cal .dl.we{color:var(--org2)}
+#cal .d{height:78px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:34px;color:#4a3a34;background:#F6EEE6;position:relative}
+#cal .d.we{background:#FFE3C2;color:var(--org2)}
+#cal .d .hl{position:absolute;inset:-6px;border-radius:22px;background:var(--org);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:36px;box-shadow:0 10px 20px rgba(232,100,30,.45)}
+.tag{position:absolute;padding:14px 30px;border-radius:999px;font-weight:900;font-size:38px;color:#fff;background:var(--mar);box-shadow:0 12px 24px rgba(0,0,0,.25)}
+/* facility cards */
+.card{position:absolute;left:90px;top:470px;width:900px;height:1010px;background:#fff;border-radius:52px;box-shadow:0 40px 80px rgba(92,15,28,.25);color:var(--mar)}
+.card .num{position:absolute;left:52px;top:34px;font-weight:900;font-size:120px;line-height:1;color:transparent;-webkit-text-stroke:4px var(--org)}
+.card .ic{position:absolute;right:48px;top:-60px;width:190px;height:190px;border-radius:50%;background:var(--mar);display:flex;align-items:center;justify-content:center;box-shadow:0 18px 36px rgba(92,15,28,.4);border:10px solid #fff}
+.card .ic svg{width:110px;height:110px}
+.card .ttl{position:absolute;left:52px;top:170px;font-weight:900;font-size:74px;letter-spacing:1px;line-height:1}
+.card .media{position:absolute;left:40px;top:280px;width:820px;height:540px;border-radius:36px;overflow:hidden;background:#cfe9f7}
+.card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .desc{position:absolute;left:52px;right:40px;top:858px;display:flex;align-items:center;gap:22px;font-weight:700;font-size:44px;color:#4a2a2a}
+.card .desc .ck{flex:0 0 84px;height:84px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center}
+.bar{position:absolute;top:418px;height:14px;width:260px;border-radius:7px;background:rgba(142,27,46,.15);overflow:hidden}
+.bar i{position:absolute;inset:0;background:var(--org);transform-origin:0 50%;transform:scaleX(0);border-radius:7px}
+</style></head>
+<body><div id="stage">
+
+<!-- ================= SCENE 1 ================= -->
+<div class="scene" id="s1" style="background:linear-gradient(165deg,#FFC04D 0%,#F7952C 50%,#E8641E 100%)">
+  <div class="abs" id="rays1" style="left:-660px;top:-300px;width:2400px;height:2400px;border-radius:50%;background:repeating-conic-gradient(rgba(255,255,255,.13) 0 9deg,rgba(255,255,255,0) 9deg 18deg)"></div>
+  <div class="blob b1" style="left:-160px;top:1450px;width:520px;height:520px;background:radial-gradient(circle,rgba(255,230,160,.55),rgba(255,230,160,0) 70%)"></div>
+  <div class="blob b2" style="left:720px;top:120px;width:480px;height:480px;background:radial-gradient(circle,rgba(255,255,255,.35),rgba(255,255,255,0) 70%)"></div>
+  <div class="abs center" id="h1" style="top:250px">
+    <div style="font-weight:900;font-size:128px;line-height:1.05;text-shadow:0 8px 0 rgba(140,40,0,.25)"><span class="w">Weekend</span> <span class="w">Ni</span></div>
+    <div style="font-weight:800;font-size:82px;line-height:1.2;margin-top:6px;text-shadow:0 6px 0 rgba(140,40,0,.2)"><span class="w">Tak</span> <span class="w">Tahu</span> <span class="w">Nak</span> <span class="w">Bawa</span></div>
+    <div style="margin-top:22px"><span class="w" id="h1tag" style="background:var(--mar);padding:10px 40px 16px;border-radius:28px;font-weight:900;font-size:86px;transform:rotate(-3deg);box-shadow:0 14px 0 rgba(92,15,28,.35)">Family Ke Mana?</span></div>
+  </div>
+  <div class="abs" id="cal">
+    <div class="hd"><div class="ring" style="left:120px"></div><div class="ring" style="right:120px"></div>HUJUNG MINGGU</div>
+    <div class="grid" id="calgrid"></div>
+  </div>
+  <div class="tag" id="tagSab" style="left:70px;top:1180px;background:var(--mar)">SABTU</div>
+  <div class="tag" id="tagAhd" style="left:820px;top:1180px;background:var(--mar)">AHAD</div>
+  <div class="abs" id="fam1" style="left:140px;top:1270px;width:800px;height:520px"></div>
+  <div class="abs center" id="risau" style="top:1745px"><span class="pill" style="background:#fff;color:var(--mar);font-size:48px;padding:16px 46px;box-shadow:0 14px 30px rgba(92,15,28,.3)">Jangan risau!</span></div>
+</div>
+
+<!-- ================= SCENE 2 ================= -->
+<div class="scene" id="s2" style="background:radial-gradient(circle at 50% 28%,#B32D43 0%,#7A1626 55%,#4A0D18 100%)">
+  <div class="abs" id="rays2" style="left:-660px;top:-700px;width:2400px;height:2400px;border-radius:50%;background:repeating-conic-gradient(rgba(255,190,90,.07) 0 6deg,rgba(255,190,90,0) 6deg 14deg)"></div>
+  <div class="abs" style="inset:0;background-image:radial-gradient(rgba(255,255,255,.08) 3px,transparent 3.5px);background-size:44px 44px"></div>
+  <div class="abs center" id="jom" style="top:205px;font-weight:900;font-size:92px;color:#FFC04D;letter-spacing:2px;text-shadow:0 8px 20px rgba(0,0,0,.3)"><span class="w">Jom</span> <span class="w">Singgah</span></div>
+  <div class="abs" id="logoCard" style="left:70px;top:340px;width:940px;height:230px;background:#fff;border-radius:44px;box-shadow:0 26px 60px rgba(0,0,0,.35);overflow:hidden">
+    <img id="logo2" src="assets/logo.png" style="position:absolute;left:50px;top:42px;width:840px">
+    <div class="shine" id="shine2"></div>
+  </div>
+  <div class="abs center" id="sub2" style="top:612px;font-weight:700;font-size:46px;line-height:1.25;color:#fff">
+    <span class="w">Your Family Weekend</span><br><span class="w" style="color:#FFC04D;font-weight:800">Dining Destination</span>
+  </div>
+  <div class="frame" id="sfFrame" style="left:80px;top:790px;width:920px;height:700px">
+    <img id="sfImg" src="assets/storefront.jpg" style="object-position:50% 52%">
+    <div class="shine" id="shine2b"></div>
+  </div>
+  <div class="abs" id="mapCard" style="left:110px;top:1400px;width:860px;height:250px;background:#fff;border-radius:40px;box-shadow:0 26px 60px rgba(0,0,0,.4);color:var(--mar)">
+    <div class="abs" style="left:24px;top:24px;width:202px;height:202px;border-radius:28px;overflow:hidden;background:#F3EBDD">
+      <svg viewBox="0 0 200 200" width="202" height="202" id="mapsvg">
+        <path d="M0 140 C60 120 90 160 200 110" stroke="#BFE3D9" stroke-width="22" fill="none"/>
+        <path class="road" d="M-10 60 L210 90" stroke="#fff" stroke-width="16" fill="none"/>
+        <path class="road" d="M70 -10 L110 210" stroke="#fff" stroke-width="14" fill="none"/>
+        <path class="road" d="M-10 175 L210 30" stroke="#FFD7A1" stroke-width="10" fill="none"/>
+        <circle id="pulse1" cx="96" cy="112" r="20" fill="none" stroke="#F28C28" stroke-width="6"/>
+        <circle id="pulse2" cx="96" cy="112" r="20" fill="none" stroke="#F28C28" stroke-width="6"/>
+        <g id="pin2"><path d="M96 30 C74 30 60 46 60 64 C60 88 96 112 96 112 C96 112 132 88 132 64 C132 46 118 30 96 30Z" fill="#8E1B2E"/><circle cx="96" cy="63" r="14" fill="#fff"/></g>
+      </svg>
+    </div>
+    <div class="abs" style="left:258px;top:46px;font-weight:600;font-size:32px;color:#b07a6a;letter-spacing:3px" id="lok">LOKASI</div>
+    <div class="abs" id="kw" style="left:256px;top:84px;font-weight:900;font-size:62px;line-height:1.1">Kota Warisan</div>
+    <div class="abs" id="sp" style="left:258px;top:162px;font-weight:800;font-size:42px;color:var(--org2)">Sepang, Selangor</div>
+  </div>
+</div>
+
+<!-- ================= SCENE 3 ================= -->
+<div class="scene" id="s3" style="background:var(--cream)">
+  <div class="blob b3" style="left:-200px;top:-120px;width:700px;height:700px;background:radial-gradient(circle,rgba(242,140,40,.28),rgba(242,140,40,0) 70%)"></div>
+  <div class="blob b4" style="left:600px;top:1200px;width:700px;height:700px;background:radial-gradient(circle,rgba(43,179,163,.22),rgba(43,179,163,0) 70%)"></div>
+  <div class="abs" style="inset:0;background-image:radial-gradient(rgba(142,27,46,.07) 3px,transparent 3.5px);background-size:48px 48px"></div>
+  <div class="abs center" id="h3" style="top:200px;color:var(--mar)">
+    <div style="font-weight:900;font-size:84px;line-height:1.1"><span class="w">Tempat</span> <span class="w">Makan</span> <span class="w" style="position:relative;color:var(--org2)">Selesa<i id="mark3" style="position:absolute;left:-6px;right:-6px;bottom:4px;height:22px;background:rgba(255,194,61,.6);border-radius:10px;z-index:-1;transform-origin:0 50%"></i></span></div>
+    <div style="font-weight:800;font-size:66px;line-height:1.2"><span class="w">Untuk</span> <span class="w">Seisi</span> <span class="w">Keluarga</span></div>
+  </div>
+  <div class="frame" id="dinFrame" style="left:60px;top:430px;width:700px;height:500px"><img id="dinImg" src="assets/dining.jpg"><div class="shine" id="shine3"></div></div>
+  <div class="frame" id="booFrame" style="left:440px;top:700px;width:590px;height:420px"><img id="booImg" src="assets/booth.jpg"></div>
+  <div class="abs center" id="badges" style="top:1160px;display:flex;justify-content:center;gap:22px">
+    <div class="pill bd" style="background:var(--mar);color:#fff;font-size:42px;padding:14px 34px 14px 18px"><span class="bi" style="width:62px;height:62px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" width="44" height="44"><rect x="12" y="44" width="76" height="30" rx="10" fill="#8E1B2E"/><rect x="22" y="26" width="56" height="28" rx="10" fill="#8E1B2E"/><rect x="6" y="40" width="18" height="34" rx="8" fill="#F28C28"/><rect x="76" y="40" width="18" height="34" rx="8" fill="#F28C28"/><rect x="18" y="74" width="8" height="12" fill="#8E1B2E"/><rect x="74" y="74" width="8" height="12" fill="#8E1B2E"/></svg></span>Selesa</div>
+    <div class="pill bd" style="background:var(--org);color:#fff;font-size:42px;padding:14px 34px 14px 18px"><span style="width:62px;height:62px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" width="46" height="46"><path d="M50 6 L60 40 L94 50 L60 60 L50 94 L40 60 L6 50 L40 40Z" fill="#F28C28"/><path d="M82 10 L86 22 L98 26 L86 30 L82 42 L78 30 L66 26 L78 22Z" fill="#FFC23D"/></svg></span>Moden</div>
+    <div class="pill bd" style="background:var(--teal);color:#fff;font-size:42px;padding:14px 34px 14px 18px"><span style="width:62px;height:62px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 100 100" width="44" height="44" fill="none" stroke="#2BB3A3" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M14 38 V14 H38"/><path d="M62 14 H86 V38"/><path d="M86 62 V86 H62"/><path d="M38 86 H14 V62"/></svg></span>Luas</div>
+  </div>
+  <div class="abs" id="fam3" style="left:170px;top:1270px;width:740px;height:481px"></div>
+</div>
+
+<!-- ================= SCENE 4 ================= -->
+<div class="scene" id="s4" style="background:linear-gradient(180deg,#FFF6EA 0%,#FFE7CC 100%)">
+  <div class="abs" style="left:-100px;top:-160px;width:1300px;height:560px;background:var(--mar);transform:rotate(-6deg);transform-origin:0 0" id="band4"></div>
+  <div class="abs" style="inset:0;background-image:radial-gradient(rgba(142,27,46,.06) 3px,transparent 3.5px);background-size:48px 48px"></div>
+  <div class="abs center" id="h4" style="top:150px">
+    <div style="font-weight:800;font-size:40px;letter-spacing:8px;color:#FFC04D" class="w">KEMUDAHAN</div><br>
+    <div style="font-weight:900;font-size:80px;line-height:1.05;color:#fff" class="w">Mesra Keluarga</div>
+  </div>
+  <div class="bar" style="left:130px"><i id="bar1"></i></div>
+  <div class="bar" style="left:410px"><i id="bar2"></i></div>
+  <div class="bar" style="left:690px"><i id="bar3"></i></div>
+
+  <div class="card" id="card1">
+    <div class="num">01</div>
+    <div class="ic"><svg viewBox="0 0 100 100" class="icsvg"><path d="M50 16 Q66 30 70 46 Q72 54 72 58 H28 Q28 54 30 46 Q34 30 50 16Z" fill="#fff"/><rect x="24" y="58" width="52" height="30" rx="3" fill="#fff"/><path d="M42 88 V74 Q50 64 58 74 V88Z" fill="#8E1B2E"/><rect x="6" y="40" width="10" height="48" rx="3" fill="#FFC23D"/><path d="M4 42 L11 28 L18 42Z" fill="#FFC23D"/><rect x="84" y="40" width="10" height="48" rx="3" fill="#FFC23D"/><path d="M82 42 L89 28 L96 42Z" fill="#FFC23D"/><path d="M52 2 A7 7 0 1 0 52 14 A5.5 5.5 0 1 1 52 2Z" fill="#FFC23D"/></svg></div>
+    <div class="ttl">SURAU SELESA</div>
+    <div class="media"><img id="surImg" src="assets/surau.jpg" style="object-position:50% 72%"></div>
+    <div class="desc"><span class="ck"><svg viewBox="0 0 100 100" width="50" height="50"><path d="M20 52 L42 72 L80 30" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Kemudahan surau yang selesa.</div>
+  </div>
+
+  <div class="card" id="card2">
+    <div class="num">02</div>
+    <div class="ic" style="background:#3E9B52"><svg viewBox="0 0 100 100" class="icsvg"><rect x="44" y="52" width="12" height="38" rx="4" fill="#fff"/><circle cx="50" cy="36" r="24" fill="#fff"/><circle cx="32" cy="48" r="16" fill="#fff"/><circle cx="68" cy="48" r="16" fill="#fff"/><circle cx="16" cy="82" r="8" fill="#FFC23D"/><circle cx="86" cy="80" r="8" fill="#FF8FA3"/><rect x="4" y="88" width="92" height="6" rx="3" fill="#fff"/></svg></div>
+    <div class="ttl">TAMAN MINI</div>
+    <div class="media" id="garden" style="background:linear-gradient(180deg,#9EDCF5 0%,#D8F2FB 70%)">
+      <svg viewBox="0 0 820 540" width="820" height="540" style="position:absolute;inset:0">
+        <circle id="gsun" cx="690" cy="110" r="58" fill="#FFD460"/>
+        <g id="gcloud" fill="#fff" opacity=".95"><ellipse cx="180" cy="100" rx="70" ry="28"/><ellipse cx="220" cy="84" rx="44" ry="32"/><ellipse cx="150" cy="88" rx="34" ry="24"/></g>
+        <path d="M-20 380 Q200 300 420 370 T860 340 V560 H-20Z" fill="#8FD17A"/>
+        <path d="M-20 430 Q260 370 520 430 T860 410 V560 H-20Z" fill="#5DBB63"/>
+        <g class="gtree" style="transform-origin:150px 420px"><rect x="140" y="320" width="22" height="100" rx="6" fill="#8A5A3C"/><circle cx="151" cy="290" r="64" fill="#3E9B52"/><circle cx="110" cy="320" r="40" fill="#3E9B52"/><circle cx="192" cy="320" r="40" fill="#46A85A"/></g>
+        <g class="gtree" style="transform-origin:650px 430px"><rect x="640" y="330" width="20" height="100" rx="6" fill="#8A5A3C"/><circle cx="650" cy="300" r="58" fill="#46A85A"/><circle cx="612" cy="332" r="36" fill="#3E9B52"/><circle cx="688" cy="332" r="36" fill="#3E9B52"/></g>
+        <g class="gtree" style="transform-origin:420px 400px"><rect x="412" y="350" width="16" height="56" rx="5" fill="#8A5A3C"/><circle cx="420" cy="335" r="38" fill="#7CC96B"/></g>
+        <g id="bench" transform="translate(300 420)"><rect x="0" y="0" width="230" height="18" rx="6" fill="#C9884F"/><rect x="0" y="-40" width="230" height="16" rx="6" fill="#C9884F"/><rect x="18" y="18" width="14" height="44" fill="#6B4A33"/><rect x="198" y="18" width="14" height="44" fill="#6B4A33"/></g>
+        <g id="flowers">
+          <g class="gfl" transform="translate(70 470)"><rect x="-3" y="0" width="6" height="40" fill="#3E9B52"/><circle r="16" fill="#FF8FA3"/><circle r="7" fill="#FFD460"/></g>
+          <g class="gfl" transform="translate(250 495)"><rect x="-3" y="0" width="6" height="40" fill="#3E9B52"/><circle r="16" fill="#FFD460"/><circle r="7" fill="#F28C28"/></g>
+          <g class="gfl" transform="translate(580 480)"><rect x="-3" y="0" width="6" height="40" fill="#3E9B52"/><circle r="16" fill="#C792EA"/><circle r="7" fill="#FFD460"/></g>
+          <g class="gfl" transform="translate(760 500)"><rect x="-3" y="0" width="6" height="40" fill="#3E9B52"/><circle r="16" fill="#FF8FA3"/><circle r="7" fill="#FFD460"/></g>
+          <g class="gfl" transform="translate(470 505)"><rect x="-3" y="0" width="6" height="40" fill="#3E9B52"/><circle r="14" fill="#fff"/><circle r="6" fill="#FFC23D"/></g>
+        </g>
+        <g id="bf1" transform="translate(300 220)"><g class="wing"><ellipse cx="-12" cy="0" rx="14" ry="18" fill="#F28C28"/><ellipse cx="12" cy="0" rx="14" ry="18" fill="#FFC23D"/></g><rect x="-2" y="-12" width="4" height="24" rx="2" fill="#5C0F1C"/></g>
+        <g id="bf2" transform="translate(540 260)"><g class="wing"><ellipse cx="-10" cy="0" rx="11" ry="15" fill="#FF8FA3"/><ellipse cx="10" cy="0" rx="11" ry="15" fill="#C792EA"/></g><rect x="-2" y="-10" width="4" height="20" rx="2" fill="#5C0F1C"/></g>
+      </svg>
+      <div class="abs" style="right:22px;bottom:20px;padding:8px 22px;border-radius:999px;background:rgba(255,255,255,.85);color:#3E7A47;font-weight:700;font-size:24px">Ilustrasi</div>
+    </div>
+    <div class="desc"><span class="ck" style="background:#3E9B52"><svg viewBox="0 0 100 100" width="50" height="50"><path d="M20 52 L42 72 L80 30" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Ruang taman mini untuk bersantai.</div>
+  </div>
+
+  <div class="card" id="card3">
+    <div class="num">03</div>
+    <div class="ic" style="background:var(--org)"><svg viewBox="0 0 100 100" class="icsvg"><rect x="12" y="20" width="8" height="70" rx="3" fill="#fff"/><rect x="40" y="20" width="8" height="70" rx="3" fill="#fff"/><rect x="18" y="36" width="24" height="6" fill="#fff"/><rect x="18" y="54" width="24" height="6" fill="#fff"/><rect x="18" y="72" width="24" height="6" fill="#fff"/><path d="M8 20 L30 4 L52 20Z" fill="#FFC23D"/><path d="M48 24 Q66 30 74 60 Q80 82 96 86 L96 94 Q72 92 66 64 Q60 40 48 34Z" fill="#fff"/></svg></div>
+    <div class="ttl" style="font-size:54px;top:186px;white-space:nowrap;letter-spacing:0">PLAYGROUND KANAK-KANAK</div>
+    <div class="media"><img id="plyImg" src="assets/playground.jpg" style="object-position:42% 55%"></div>
+    <div class="desc"><span class="ck" style="background:var(--org)"><svg viewBox="0 0 100 100" width="50" height="50"><path d="M20 52 L42 72 L80 30" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Anak-anak pun boleh bermain!</div>
+  </div>
+</div>
+
+<!-- ================= SCENE 5 ================= -->
+<div class="scene" id="s5" style="background:linear-gradient(165deg,#FFB547 0%,#F28C28 45%,#C9452A 100%)">
+  <div class="abs" id="rays5" style="left:-660px;top:-200px;width:2400px;height:2400px;border-radius:50%;background:repeating-conic-gradient(rgba(255,255,255,.12) 0 9deg,rgba(255,255,255,0) 9deg 18deg)"></div>
+  <div class="abs center" id="h5" style="top:270px">
+    <div style="font-weight:900;font-size:116px;line-height:1.05;text-shadow:0 8px 0 rgba(120,30,0,.25)"><span class="w">Weekend</span> <span class="w">Ini,</span></div>
+    <div style="font-weight:800;font-size:88px;line-height:1.2;text-shadow:0 6px 0 rgba(120,30,0,.2)"><span class="w">Luangkan</span> <span class="w">Masa</span></div>
+    <div style="margin-top:24px"><span class="w" id="h5tag" style="background:var(--mar);padding:10px 40px 16px;border-radius:28px;font-weight:900;font-size:84px;transform:rotate(-3deg);box-shadow:0 14px 0 rgba(92,15,28,.35)">Bersama Keluarga!</span></div>
+  </div>
+  <div class="abs" id="fam5" style="left:140px;top:1000px;width:800px;height:520px"></div>
+
+  <div class="abs" id="burst" style="left:540px;top:960px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#FFFCF6"></div>
+  <div class="abs" id="final" style="inset:0;color:var(--mar)">
+    <div class="abs" style="inset:0;background-image:radial-gradient(rgba(242,140,40,.12) 3px,transparent 3.5px);background-size:48px 48px"></div>
+    <div class="abs center" id="fh" style="top:300px;font-weight:800;font-size:56px;line-height:1.25"><span class="w">Weekend Ini, Luangkan Masa</span><br><span class="w" style="color:var(--org2)">Bersama Keluarga!</span></div>
+    <div class="abs" id="ring5" style="left:540px;top:800px;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;border:14px solid var(--org)"></div>
+    <div class="abs" id="logoWrap" style="left:70px;top:700px;width:940px;height:200px;overflow:hidden">
+      <img id="logo5" src="assets/logo.png" style="position:absolute;left:20px;top:10px;width:900px">
+      <div class="shine" id="shine5"></div>
+    </div>
+    <div class="abs" id="divider" style="left:240px;top:950px;width:600px;height:8px;border-radius:4px;background:var(--org)"></div>
+    <div class="abs center" id="loc5" style="top:1000px"><span class="pill" style="background:var(--mar);color:#fff;font-size:50px;padding:18px 48px 18px 30px;letter-spacing:2px;box-shadow:0 16px 30px rgba(92,15,28,.3)"><svg viewBox="0 0 100 100" width="58" height="58"><path d="M50 6 C30 6 18 22 18 40 C18 64 50 96 50 96 C50 96 82 64 82 40 C82 22 70 6 50 6Z" fill="#FFC04D"/><circle cx="50" cy="40" r="13" fill="#8E1B2E"/></svg>SEPANG, SELANGOR</span></div>
+    <div class="abs center" id="kw5" style="top:1118px;font-weight:600;font-size:36px;color:#a0705e;letter-spacing:4px">KOTA WARISAN</div>
+    <div class="abs center" id="tg5" style="top:1210px;font-family:Script;font-size:72px;line-height:1.35;color:var(--mar)"><span class="w" id="tgA">Good Food.</span><br><span class="w" id="tgB" style="color:var(--org2)">Great Family Moments.</span></div>
+    <div class="abs" id="fam5b" style="left:330px;top:1500px;width:420px;height:273px"></div>
+  </div>
+</div>
+
+<!-- transition wipe -->
+<div class="abs" id="wipe" style="left:0;top:0;width:1080px;height:1920px;pointer-events:none">
+  <div class="abs wp" style="left:-300px;top:-400px;width:1700px;height:2800px;background:#FFC23D"></div>
+  <div class="abs wp" style="left:-300px;top:-400px;width:1700px;height:2800px;background:#F28C28"></div>
+  <div class="abs wp" style="left:-300px;top:-400px;width:1700px;height:2800px;background:#8E1B2E"></div>
+</div>
+<canvas id="fx" width="1080" height="1920" class="abs" style="left:0;top:0;pointer-events:none"></canvas>
+</div>
+
+<script src="node_modules/gsap/dist/gsap.min.js"></script>
+<script>
+// ---------- family illustration ----------
+function family(mode, id){
+  const sk1='#EDB98A', sk2='#F3C49B', sk3='#E8AE80', hair='#2A1C18';
+  const face=(cx,cy,s)=>`<circle cx="${cx-18*s}" cy="${cy}" r="${6*s}" fill="${hair}"/><circle cx="${cx+18*s}" cy="${cy}" r="${6*s}" fill="${hair}"/>
+   <circle cx="${cx-30*s}" cy="${cy+20*s}" r="${9*s}" fill="#F59C8B" opacity=".55"/><circle cx="${cx+30*s}" cy="${cy+20*s}" r="${9*s}" fill="#F59C8B" opacity=".55"/>
+   <path d="M${cx-20*s} ${cy+22*s} Q${cx} ${cy+42*s} ${cx+20*s} ${cy+22*s}" stroke="${hair}" stroke-width="${5*s}" fill="none" stroke-linecap="round"/>`;
+  let s=`<svg viewBox="0 0 800 520" width="100%" height="100%">`;
+  s+=`<ellipse cx="400" cy="508" rx="380" ry="14" fill="rgba(0,0,0,.12)"/>`;
+  // Dad
+  s+=`<g class="p p1"><rect x="160" y="380" width="32" height="125" rx="14" fill="#34304A"/><rect x="196" y="380" width="32" height="125" rx="14" fill="#34304A"/>
+   <line class="armL" x1="150" y1="255" x2="112" y2="350" stroke="#A3263A" stroke-width="32" stroke-linecap="round"/><circle cx="110" cy="356" r="17" fill="${sk1}"/>
+   <g class="wave" style="transform-origin:240px 255px"><line x1="240" y1="255" x2="290" y2="170" stroke="#A3263A" stroke-width="32" stroke-linecap="round"/><circle cx="294" cy="160" r="18" fill="${sk1}"/></g>
+   <rect x="135" y="225" width="120" height="180" rx="48" fill="#A3263A"/><path d="M175 228 L195 262 L215 228" fill="#fff" opacity=".9"/>
+   <rect x="185" y="200" width="20" height="30" fill="${sk1}"/>
+   <circle cx="138" cy="165" r="12" fill="${sk1}"/><circle cx="252" cy="165" r="12" fill="${sk1}"/>
+   <circle cx="195" cy="160" r="58" fill="${sk1}"/>
+   <path d="M137 160 Q134 96 195 96 Q256 96 253 160 Q246 124 214 122 Q178 130 156 118 Q142 134 137 160Z" fill="${hair}"/>
+   ${face(195,165,1)}</g>`;
+  // Mom (hijab)
+  s+=`<g class="p p2"><path d="M318 245 Q375 228 432 245 L458 505 L292 505 Z" fill="#F28C28"/>
+   <line x1="322" y1="275" x2="300" y2="365" stroke="#F28C28" stroke-width="30" stroke-linecap="round"/><circle cx="298" cy="372" r="16" fill="${sk2}"/>
+   <line x1="428" y1="275" x2="452" y2="362" stroke="#F28C28" stroke-width="30" stroke-linecap="round"/><circle cx="454" cy="368" r="16" fill="${sk2}"/>
+   <circle cx="375" cy="165" r="68" fill="#2BB3A3"/><path d="M308 175 Q306 262 375 272 Q444 262 442 175Z" fill="#2BB3A3"/>
+   <path d="M318 246 Q375 300 432 246 L440 272 Q375 322 310 272Z" fill="#23998B"/>
+   <ellipse cx="375" cy="172" rx="45" ry="52" fill="${sk2}"/>
+   <path d="M330 150 Q375 112 420 150 Q375 132 330 150Z" fill="#23998B"/>
+   ${face(375,170,.92)}</g>`;
+  // Boy
+  s+=`<g class="p p3"><rect x="510" y="440" width="22" height="65" rx="10" fill="${sk3}"/><rect x="540" y="440" width="22" height="65" rx="10" fill="${sk3}"/>
+   <rect x="504" y="410" width="66" height="44" rx="12" fill="#2F5D8A"/>
+   <line x1="502" y1="340" x2="484" y2="405" stroke="#FFC23D" stroke-width="24" stroke-linecap="round"/><circle cx="483" cy="410" r="13" fill="${sk3}"/>
+   <g class="wave2" style="transform-origin:572px 340px"><line x1="572" y1="340" x2="606" y2="282" stroke="#FFC23D" stroke-width="24" stroke-linecap="round"/><circle cx="609" cy="275" r="13" fill="${sk3}"/></g>
+   <rect x="496" y="318" width="82" height="112" rx="34" fill="#FFC23D"/>
+   <circle cx="537" cy="268" r="46" fill="${sk3}"/>
+   <path d="M490 262 Q488 214 537 214 Q588 214 584 262 Q574 236 552 234 Q520 244 500 236Z" fill="${hair}"/>
+   ${face(537,272,.78)}</g>`;
+  // Girl
+  s+=`<g class="p p4"><rect x="663" y="455" width="18" height="50" rx="8" fill="${sk2}"/><rect x="689" y="455" width="18" height="50" rx="8" fill="${sk2}"/>
+   <line x1="662" y1="352" x2="640" y2="410" stroke="#FF6F86" stroke-width="22" stroke-linecap="round"/><circle cx="638" cy="415" r="12" fill="${sk2}"/>
+   <line x1="708" y1="352" x2="730" y2="410" stroke="#FF6F86" stroke-width="22" stroke-linecap="round"/><circle cx="732" cy="415" r="12" fill="${sk2}"/>
+   <path d="M655 340 Q685 326 715 340 L742 468 L628 468Z" fill="#FF6F86"/>
+   <circle cx="640" cy="282" r="20" fill="${hair}"/><circle cx="730" cy="282" r="20" fill="${hair}"/>
+   <circle cx="685" cy="292" r="42" fill="${sk2}"/>
+   <path d="M642 288 Q640 246 685 246 Q730 246 728 288 Q712 264 685 266 Q658 264 642 288Z" fill="${hair}"/>
+   <circle cx="726" cy="270" r="9" fill="#FFC23D"/>
+   ${face(685,296,.72)}</g>`;
+  if(mode==='table'){
+    s+=`<g class="tbl"><rect x="40" y="398" width="720" height="34" rx="14" fill="#E2C49A"/><rect x="40" y="398" width="720" height="10" rx="5" fill="#F1DDBD"/>
+     <rect x="70" y="432" width="660" height="80" rx="10" fill="#C99E6B"/>
+     <rect x="110" y="432" width="18" height="80" fill="#B0875A"/><rect x="672" y="432" width="18" height="80" fill="#B0875A"/></g>`;
+    // food on table
+    s+=`<g class="food f1" style="transform-origin:200px 398px"><ellipse cx="200" cy="396" rx="70" ry="16" fill="#fff"/><g transform="translate(200 372) rotate(-20)"><ellipse cx="-10" cy="0" rx="34" ry="24" fill="#D9822B"/><ellipse cx="-14" cy="-6" rx="22" ry="12" fill="#EFA049" opacity=".8"/><rect x="18" y="-6" width="34" height="12" rx="6" fill="#FFF3DD"/><circle cx="54" cy="-8" r="9" fill="#FFF3DD"/><circle cx="54" cy="8" r="9" fill="#FFF3DD"/></g></g>`;
+    s+=`<g class="food f2" style="transform-origin:380px 398px"><ellipse cx="380" cy="396" rx="70" ry="16" fill="#fff"/><g transform="translate(380 350)"><path d="M-44 0 Q-44 -34 0 -34 Q44 -34 44 0Z" fill="#E59A3A"/><rect x="-48" y="0" width="96" height="9" rx="4" fill="#5DBB63"/><rect x="-46" y="9" width="92" height="14" rx="6" fill="#7A3B1E"/><rect x="-48" y="23" width="96" height="7" rx="3" fill="#FFC23D"/><path d="M-44 30 H44 Q44 44 0 44 Q-44 44 -44 30Z" fill="#E59A3A"/><circle cx="-14" cy="-20" r="2.5" fill="#fff"/><circle cx="8" cy="-24" r="2.5" fill="#fff"/><circle cx="22" cy="-14" r="2.5" fill="#fff"/></g></g>`;
+    s+=`<g class="food f3" style="transform-origin:560px 398px"><g transform="translate(540 330)"><rect x="-6" y="-10" width="8" height="40" rx="3" fill="#FFC23D" transform="rotate(-12)"/><rect x="6" y="-16" width="8" height="46" rx="3" fill="#FFD460"/><rect x="18" y="-8" width="8" height="38" rx="3" fill="#FFC23D" transform="rotate(10 22 10)"/><path d="M-16 20 H40 L34 68 H-10Z" fill="#C8102E"/><path d="M-4 40 Q12 50 28 40" stroke="#fff" stroke-width="4" fill="none"/></g></g>`;
+    s+=`<g class="food f4" style="transform-origin:690px 398px"><g transform="translate(690 330)"><rect x="6" y="-30" width="6" height="40" rx="3" fill="#2BB3A3" transform="rotate(14)"/><path d="M-22 0 H22 L16 66 H-16Z" fill="#fff"/><path d="M-20 18 H20 L17 50 H-17Z" fill="#F28C28"/><rect x="-25" y="-6" width="50" height="10" rx="5" fill="#8E1B2E"/></g></g>`;
+  }
+  if(mode==='question'){
+    [[195,58],[375,60],[537,186],[685,212]].forEach(([x,y],i)=>{
+      s+=`<g class="q q${i}" style="transform-origin:${x}px ${y}px"><circle cx="${x}" cy="${y-28}" r="${i<2?40:32}" fill="#fff"/><text x="${x}" y="${y-28+ (i<2?20:16)}" text-anchor="middle" font-family="P" font-weight="900" font-size="${i<2?58:46}" fill="#8E1B2E">?</text></g>`;
+    });
+  }
+  if(mode==='heart'||mode==='question'){
+    [[195,40],[375,40],[537,170],[685,196]].forEach(([x,y],i)=>{
+      s+=`<g class="h h${i}" style="transform-origin:${x}px ${y}px"><path transform="translate(${x} ${y}) scale(${i<2?1.4:1.1})" d="M0 12 C-30 -8 -22 -32 -10 -32 C-4 -32 0 -26 0 -22 C0 -26 4 -32 10 -32 C22 -32 30 -8 0 12Z" fill="#FF3B5C" stroke="#fff" stroke-width="3"/></g>`;
+    });
+  }
+  s+='</svg>';
+  document.getElementById(id).innerHTML=s;
+}
+family('question','fam1'); family('table','fam3'); family('heart','fam5'); family('heart','fam5b');
+
+// calendar
+(function(){
+  const g=document.getElementById('calgrid');
+  const dl=['ISN','SEL','RAB','KHA','JUM','SAB','AHD'];
+  let h=dl.map((d,i)=>`<div class="dl${i>4?' we':''}">${d}</div>`).join('');
+  for(let i=0;i<14;i++){const we=(i%7)>4; const n=i+9;
+    h+=`<div class="d${we?' we':''}" ${i===12?'id="dSab"':''}${i===13?'id="dAhd"':''}>${n}${(i===12||i===13)?`<span class="hl">${n}</span>`:''}</div>`;}
+  g.innerHTML=h;
+})();
+
+// ---------- timeline ----------
+const T2=5.0,T3=12.9,T4=19.85,C2=23.45,C3=26.6,T5=29.7,END=40;
+const tl=gsap.timeline({paused:true});
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const showScene=(id,t)=>{tl.set(id,{visibility:'visible'},t)}, hideScene=(id,t)=>{tl.set(id,{visibility:'hidden'},t)};
+tl.set('#final',{autoAlpha:0},0).set('#burst',{scale:0},0);
+
+// wipe helper: diagonal colour stripes cross the screen; scene swap at mid
+function wipe(t, from, to){
+  const wps=$$('#wipe .wp');
+  wps.forEach((w,i)=>{
+    tl.fromTo(w,{x:2600,rotation:-18,transformOrigin:'50% 50%'},{x:0,duration:.32,ease:'power3.in'},t+i*.06);
+    tl.to(w,{x:-2800,duration:.38,ease:'power3.out'},t+.42+i*.06);
+  });
+  hideScene(from,t+.42); showScene(to,t+.42);
+}
+
+/* ===== SCENE 1 ===== */
+showScene('#s1',0);
+const h1w=$$('#h1 .w');
+tl.fromTo(h1w[0],{y:-260,scale:.4,autoAlpha:0},{y:0,scale:1,autoAlpha:1,duration:.55,ease:'back.out(2.2)'},.12);
+tl.fromTo(h1w[1],{y:-260,scale:.4,autoAlpha:0},{y:0,scale:1,autoAlpha:1,duration:.55,ease:'back.out(2.2)'},.32);
+tl.fromTo([h1w[2],h1w[3],h1w[4],h1w[5]],{y:80,autoAlpha:0,rotation:8},{y:0,autoAlpha:1,rotation:0,duration:.4,stagger:.13,ease:'back.out(2)'},.9);
+tl.fromTo('#h1tag',{scale:0,rotation:-25},{scale:1,rotation:-3,duration:.6,ease:'elastic.out(1,.55)'},1.65);
+tl.fromTo('#cal',{y:-1100,rotation:-14},{y:0,rotation:0,duration:.85,ease:'bounce.out'},.35);
+tl.fromTo('#cal .d',{scale:0},{scale:1,duration:.25,stagger:.025,ease:'back.out(3)'},1.0);
+tl.fromTo('#cal .hl',{scale:0,rotation:-90},{scale:1,rotation:0,duration:.45,stagger:.18,ease:'back.out(3)'},1.75);
+tl.fromTo('#tagSab',{scale:0,x:200,y:-120,rotation:-30},{scale:1,x:0,y:0,rotation:-8,duration:.5,ease:'back.out(2.5)'},1.95);
+tl.fromTo('#tagAhd',{scale:0,x:-200,y:-120,rotation:30},{scale:1,x:0,y:0,rotation:8,duration:.5,ease:'back.out(2.5)'},2.12);
+tl.fromTo('#fam1',{y:700},{y:0,duration:.8,ease:'power4.out'},.75);
+tl.fromTo('#fam1 .p',{y:60,scaleY:.8,transformOrigin:'50% 100%'},{y:0,scaleY:1,duration:.5,stagger:.08,ease:'back.out(3)'},1.0);
+tl.fromTo('#fam1 .q',{scale:0},{scale:1,duration:.4,stagger:.1,ease:'back.out(3)'},1.6);
+tl.fromTo('#fam1 .h',{scale:0},{scale:0},0);
+tl.to('#fam1 .q',{scale:0,duration:.25,stagger:.05,ease:'back.in(2)'},3.35);
+tl.to('#fam1 .h',{scale:1,duration:.4,stagger:.07,ease:'back.out(3)'},3.6);
+tl.fromTo('#risau',{y:200,autoAlpha:0},{y:0,autoAlpha:1,duration:.45,ease:'back.out(2)'},3.45);
+tl.fromTo('#fam1 .wave',{rotation:0},{rotation:-22,duration:.25,yoyo:true,repeat:5,ease:'sine.inOut'},3.5);
+wipe(T2-.42,'#s1','#s2');
+
+/* ===== SCENE 2 ===== */
+const jw=$$('#jom .w');
+tl.fromTo(jw,{y:120,autoAlpha:0,scale:.6},{y:0,autoAlpha:1,scale:1,duration:.5,stagger:.15,ease:'back.out(2.4)'},T2+.15);
+tl.fromTo('#logoCard',{scale:.2,autoAlpha:0,rotation:-8},{scale:1,autoAlpha:1,rotation:0,duration:.75,ease:'elastic.out(1,.6)'},T2+.55);
+tl.fromTo('#logo2',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.7,ease:'power2.inOut'},T2+.8);
+tl.fromTo('#shine2',{x:0},{x:1500,duration:.9,ease:'power2.inOut'},T2+1.6);
+tl.fromTo('#shine2',{x:0},{x:1500,duration:.9,ease:'power2.inOut'},T2+5.6);
+const sw=$$('#sub2 .w');
+tl.fromTo(sw,{y:50,autoAlpha:0},{y:0,autoAlpha:1,duration:.5,stagger:.15,ease:'power3.out'},T2+1.35);
+tl.fromTo('#sfFrame',{y:900,rotation:8},{y:0,rotation:0,duration:.9,ease:'power4.out'},T2+.9);
+tl.fromTo('#sfImg',{scale:1.28,xPercent:-3},{scale:1.04,xPercent:2,duration:7,ease:'none'},T2+.9);
+tl.fromTo('#shine2b',{x:0},{x:1600,duration:1.1,ease:'power2.inOut'},T2+1.9);
+tl.fromTo('#mapCard',{y:500,autoAlpha:0},{y:0,autoAlpha:1,duration:.7,ease:'back.out(1.6)'},T2+1.95);
+tl.fromTo('#mapsvg .road',{strokeDasharray:400,strokeDashoffset:400},{strokeDashoffset:0,duration:.8,stagger:.15,ease:'power2.out'},T2+2.2);
+tl.fromTo('#pin2',{y:-160,scale:.6,transformOrigin:'96px 112px'},{y:0,scale:1,duration:.7,ease:'bounce.out'},T2+2.35);
+tl.fromTo('#pulse1',{attr:{r:8},opacity:1},{attr:{r:70},opacity:0,duration:1.2,repeat:4,ease:'power1.out'},T2+2.9);
+tl.fromTo('#pulse2',{attr:{r:8},opacity:1},{attr:{r:70},opacity:0,duration:1.2,repeat:3,ease:'power1.out'},T2+3.5);
+tl.fromTo('#lok',{x:-40,autoAlpha:0},{x:0,autoAlpha:1,duration:.4},T2+2.2);
+tl.fromTo('#kw',{x:-60,autoAlpha:0},{x:0,autoAlpha:1,duration:.5,ease:'power3.out'},T2+2.15);
+tl.fromTo('#sp',{x:-60,autoAlpha:0},{x:0,autoAlpha:1,duration:.5,ease:'power3.out'},T2+3.2);
+tl.to('#sp',{scale:1.12,transformOrigin:'0 50%',duration:.2,yoyo:true,repeat:1},T2+3.35);
+// "destinasi" emphasis
+tl.to('#sub2',{scale:1.08,duration:.3,yoyo:true,repeat:1,ease:'sine.inOut'},T2+5.05);
+tl.to('#sfFrame',{y:-14,duration:.3,yoyo:true,repeat:1,ease:'sine.inOut'},T2+5.15);
+// iris to scene 3
+tl.set('#s3',{clipPath:'circle(0px at 540px 1500px)',visibility:'visible'},T3-.45);
+tl.to('#s3',{clipPath:'circle(2300px at 540px 1500px)',duration:.6,ease:'power3.in'},T3-.45);
+hideScene('#s2',T3+.2);
+
+/* ===== SCENE 3 ===== */
+const h3w=$$('#h3 .w');
+tl.fromTo(h3w,{y:90,autoAlpha:0,rotationX:-80},{y:0,autoAlpha:1,rotationX:0,duration:.5,stagger:.09,ease:'back.out(2)'},T3-.05);
+tl.fromTo('#mark3',{scaleX:0},{scaleX:1,duration:.45,ease:'power2.out'},T3+.95);
+tl.fromTo('#dinFrame',{x:-900,rotation:-14},{x:0,rotation:-4,duration:.8,ease:'power4.out'},T3+.2);
+tl.fromTo('#booFrame',{x:900,rotation:14},{x:0,rotation:5,duration:.8,ease:'power4.out'},T3+.45);
+tl.fromTo('#dinImg',{scale:1.25},{scale:1.05,duration:7,ease:'none'},T3+.2);
+tl.fromTo('#booImg',{scale:1.05,xPercent:3},{scale:1.22,xPercent:-3,duration:7,ease:'none'},T3+.45);
+tl.to('#dinFrame',{x:-30,y:-10,duration:6,ease:'sine.inOut'},T3+1);
+tl.to('#booFrame',{x:20,y:12,duration:6,ease:'sine.inOut'},T3+1.25);
+tl.fromTo('#shine3',{x:0},{x:1300,duration:1,ease:'power2.inOut'},T3+1.1);
+const bds=$$('#badges .bd');
+[1.05,1.9,2.55].forEach((d,i)=>tl.fromTo(bds[i],{scale:0,y:60,rotation:i%2?8:-8},{scale:1,y:0,rotation:0,duration:.5,ease:'back.out(3)'},T3+d));
+tl.fromTo('#fam3',{y:620,autoAlpha:0},{y:0,autoAlpha:1,duration:.8,ease:'power4.out'},T3+3.55);
+tl.fromTo('#fam3 .food',{scale:0,y:-80},{scale:1,y:0,duration:.5,stagger:.15,ease:'back.out(3)'},T3+4.2);
+tl.fromTo('#fam3 .wave',{rotation:0},{rotation:-20,duration:.3,yoyo:true,repeat:3,ease:'sine.inOut'},T3+4.6);
+tl.fromTo('#fam3 .wave2',{rotation:0},{rotation:-25,duration:.3,yoyo:true,repeat:3,ease:'sine.inOut'},T3+4.8);
+wipe(T4-.42,'#s3','#s4');
+
+/* ===== SCENE 4 ===== */
+tl.fromTo('#band4',{yPercent:-100},{yPercent:0,duration:.6,ease:'power3.out'},T4);
+const h4w=$$('#h4 .w');
+tl.fromTo(h4w,{y:-80,autoAlpha:0},{y:0,autoAlpha:1,duration:.5,stagger:.12,ease:'back.out(2)'},T4+.1);
+tl.fromTo('.bar',{scaleX:0},{scaleX:1,duration:.4,stagger:.08,ease:'power2.out'},T4+.2);
+const cardIn=(c,t)=>{
+  tl.set(c,{visibility:'visible'},t);
+  tl.fromTo(c,{x:1150,rotationY:-35,transformPerspective:2200},{x:0,rotationY:0,duration:.6,ease:'power3.out'},t);
+  tl.fromTo(c+' .ic',{scale:0,rotation:-180},{scale:1,rotation:0,duration:.6,ease:'back.out(2.5)'},t+.3);
+  tl.fromTo(c+' .num',{x:-80,autoAlpha:0},{x:0,autoAlpha:1,duration:.5,ease:'power3.out'},t+.35);
+  tl.fromTo(c+' .ttl',{y:40,autoAlpha:0},{y:0,autoAlpha:1,duration:.5,ease:'back.out(2)'},t+.4);
+  tl.fromTo(c+' .media',{clipPath:'inset(0 0 100% 0 round 36px)'},{clipPath:'inset(0 0 0% 0 round 36px)',duration:.6,ease:'power3.inOut'},t+.45);
+  tl.fromTo(c+' .desc',{y:40,autoAlpha:0},{y:0,autoAlpha:1,duration:.5,ease:'back.out(2)'},t+.85);
+  tl.fromTo(c+' .ck',{scale:0},{scale:1,duration:.4,ease:'back.out(4)'},t+1.0);
+};
+const cardOut=(c,t)=>{tl.to(c,{x:-1150,rotationY:35,duration:.5,ease:'power3.in'},t);tl.set(c,{visibility:'hidden'},t+.5);};
+tl.set(['#card1','#card2','#card3'],{visibility:'hidden'},0);
+cardIn('#card1',T4+.15); tl.to('#bar1',{scaleX:1,duration:C2-T4-.2,ease:'none'},T4+.15);
+tl.fromTo('#surImg',{scale:1.2},{scale:1.02,duration:3.6,ease:'none'},T4+.4);
+cardOut('#card1',C2-.35);
+cardIn('#card2',C2); tl.to('#bar2',{scaleX:1,duration:C3-C2,ease:'none'},C2);
+tl.fromTo('#garden .gtree',{scale:0},{scale:1,duration:.6,stagger:.15,ease:'back.out(2.5)'},C2+.6);
+tl.fromTo('#garden .gfl',{scale:0},{scale:1,duration:.4,stagger:.08,ease:'back.out(3)'},C2+1.0);
+tl.fromTo('#bench',{y:80,opacity:0},{y:0,opacity:1,duration:.5,ease:'back.out(2)'},C2+.9);
+tl.fromTo('#gsun',{attr:{cy:260}},{attr:{cy:110},duration:1.2,ease:'power2.out'},C2+.5);
+cardOut('#card2',C3-.35);
+cardIn('#card3',C3); tl.to('#bar3',{scaleX:1,duration:T5-C3,ease:'none'},C3);
+tl.fromTo('#plyImg',{scale:1.25,xPercent:4},{scale:1.04,xPercent:-2,duration:3.4,ease:'none'},C3+.4);
+wipe(T5-.42,'#s4','#s5');
+
+/* ===== SCENE 5 ===== */
+const h5w=$$('#h5 .w');
+tl.fromTo([h5w[0],h5w[1]],{y:-260,scale:.4,autoAlpha:0},{y:0,scale:1,autoAlpha:1,duration:.55,stagger:.18,ease:'back.out(2.2)'},T5+.15);
+tl.fromTo([h5w[2],h5w[3]],{y:80,autoAlpha:0,rotation:8},{y:0,autoAlpha:1,rotation:0,duration:.45,stagger:.2,ease:'back.out(2)'},T5+1.4);
+tl.fromTo('#h5tag',{scale:0,rotation:-25},{scale:1,rotation:-3,duration:.6,ease:'elastic.out(1,.55)'},T5+2.4);
+tl.fromTo('#fam5',{y:800},{y:0,duration:.9,ease:'power4.out'},T5+.6);
+tl.fromTo('#fam5 .h',{scale:0},{scale:1,duration:.45,stagger:.12,ease:'back.out(3)'},T5+2.0);
+tl.fromTo('#fam5 .wave',{rotation:0},{rotation:-22,duration:.25,yoyo:true,repeat:5,ease:'sine.inOut'},T5+1.3);
+tl.fromTo('#fam5 .wave2',{rotation:0},{rotation:-25,duration:.25,yoyo:true,repeat:5,ease:'sine.inOut'},T5+1.5);
+// burst to white
+const TB=T5+4.15; // ~33.85
+tl.to('#burst',{scale:500,duration:.6,ease:'power3.in'},TB);
+tl.set('#final',{autoAlpha:1},TB+.55);
+tl.set(['#h5','#fam5','#rays5'],{autoAlpha:0},TB+.6);
+tl.fromTo('#ring5',{scale:.1,opacity:1},{scale:1.4,opacity:0,duration:1.0,ease:'power2.out'},TB+.6);
+tl.fromTo('#logoWrap',{scale:.6,autoAlpha:0},{scale:1,autoAlpha:1,duration:.8,ease:'back.out(1.8)'},TB+.55);
+tl.fromTo('#logo5',{clipPath:'inset(0 50% 0 50%)'},{clipPath:'inset(0 0% 0 0%)',duration:.75,ease:'power3.out'},TB+.6);
+tl.fromTo('#shine5',{x:0},{x:1600,duration:1,ease:'power2.inOut'},TB+1.45);
+tl.fromTo('#shine5',{x:0},{x:1600,duration:1,ease:'power2.inOut'},TB+4.6);
+tl.fromTo('#fh .w',{y:-50,autoAlpha:0},{y:0,autoAlpha:1,duration:.5,stagger:.15,ease:'power3.out'},TB+.8);
+tl.fromTo('#divider',{scaleX:0},{scaleX:1,duration:.5,ease:'power3.out'},TB+1.2);
+tl.fromTo('#loc5',{scale:0,y:40},{scale:1,y:0,duration:.6,ease:'back.out(2.5)'},TB+1.45);
+tl.fromTo('#kw5',{autoAlpha:0,y:20},{autoAlpha:1,y:0,duration:.5},TB+1.8);
+tl.fromTo('#tgA',{scale:.3,autoAlpha:0,rotation:-6},{scale:1,autoAlpha:1,rotation:0,duration:.6,ease:'back.out(2.5)'},TB+2.45);
+tl.fromTo('#tgB',{scale:.3,autoAlpha:0,rotation:6},{scale:1,autoAlpha:1,rotation:0,duration:.6,ease:'back.out(2.5)'},TB+3.35);
+tl.fromTo('#fam5b',{y:400,autoAlpha:0},{y:0,autoAlpha:1,duration:.8,ease:'power4.out'},TB+3.0);
+tl.fromTo('#fam5b .h',{scale:0},{scale:1,duration:.4,stagger:.1,ease:'back.out(3)'},TB+3.6);
+tl.fromTo('#fam5b .wave',{rotation:0},{rotation:-22,duration:.3,yoyo:true,repeat:7,ease:'sine.inOut'},TB+3.6);
+tl.to('#logoWrap',{scale:1.04,duration:1.3,yoyo:true,repeat:1,ease:'sine.inOut'},TB+3.0);
+tl.set({}, {}, END);
+
+// ---------- ambient + particles ----------
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const R=rng(7);
+const COLS=['#FFC23D','#8E1B2E','#2BB3A3','#fff','#FF6F86','#F28C28'];
+function mkBurst(t0,x,y,n,spread){const a=[];for(let i=0;i<n;i++){const ang=-Math.PI/2+(R()-.5)*spread;const sp=900+R()*1300;a.push({t0,x,y,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,rot:R()*6,vr:(R()-.5)*14,w:12+R()*16,h:8+R()*10,c:COLS[(R()*COLS.length)|0],ph:R()*6});}return a;}
+const confetti=[...mkBurst(1.85,540,1150,90,2.6),...mkBurst(T5+2.5,540,1150,110,2.8),...mkBurst(T5+4.8,540,800,140,6.2)];
+const sparkles=[];for(let i=0;i<90;i++)sparkles.push({x:80+R()*920,y:150+R()*1650,ph:R()*6,s:10+R()*18});
+const fx=document.getElementById('fx').getContext('2d');
+function star(c,x,y,r){c.beginPath();for(let i=0;i<8;i++){const rr=i%2?r*.28:r;const a=i*Math.PI/4;c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);}c.closePath();c.fill();}
+function ambient(t){
+  $('#rays1').style.rotate=(t*10)+'deg'; $('#rays2').style.rotate=(-t*6)+'deg'; $('#rays5').style.rotate=(t*10)+'deg';
+  $$('.blob').forEach((b,i)=>{b.style.translate=`${Math.sin(t*.7+i)*60}px ${Math.cos(t*.5+i*2)*50}px`;});
+  $('#cal').style.translate=`0 ${Math.sin(t*2.2)*8}px`;
+  $$('.q').forEach((q,i)=>q.style.translate=`0 ${Math.sin(t*5+i)*7}px`);
+  $$('.h').forEach((q,i)=>q.style.translate=`0 ${Math.sin(t*4+i*1.3)*8}px`);
+  $$('.p').forEach((p,i)=>p.style.translate=`0 ${Math.abs(Math.sin(t*3.2+i*.8))*-6}px`);
+  $$('.card .icsvg').forEach((p,i)=>p.style.rotate=`${Math.sin(t*3+i)*6}deg`);
+  $$('#garden .gtree').forEach((g,i)=>g.style.rotate=`${Math.sin(t*1.6+i)*2}deg`);
+  $('#bf1').setAttribute('transform',`translate(${300+Math.sin(t*.9)*120} ${210+Math.sin(t*2.1)*40})`);
+  $('#bf2').setAttribute('transform',`translate(${560+Math.cos(t*.8)*110} ${250+Math.sin(t*1.8+1)*36})`);
+  $$('.wing').forEach((w,i)=>w.setAttribute('transform',`scale(${.35+Math.abs(Math.sin(t*14+i))*.65} 1)`));
+  $('#gcloud').setAttribute('transform',`translate(${(t*18)%200-40} 0)`);
+  $('#loc5').style.translate=`0 ${Math.sin(t*2.4)*5}px`;
+  // canvas fx
+  fx.clearRect(0,0,1080,1920);
+  for(const p of confetti){const d=t-p.t0; if(d<0||d>3.2)continue;
+    const x=p.x+p.vx*d*Math.exp(-d*1.2)*.9 + Math.sin(d*4+p.ph)*30, y=p.y+p.vy*d*Math.exp(-d*1.6)*.9+ 420*d*d*.5;
+    fx.save();fx.globalAlpha=Math.min(1,(3.2-d)*1.5);fx.translate(x,y);fx.rotate(p.rot+p.vr*d);fx.scale(1,Math.cos(d*8+p.ph));fx.fillStyle=p.c;fx.fillRect(-p.w/2,-p.h/2,p.w,p.h);fx.restore();}
+  // sparkles in scenes 2 & final
+  const sOn=(t>T2&&t<T3-.3)?1:(t>T5+4.7?1:0);
+  if(sOn){for(const s of sparkles){if(!(s.x<80||s.x>1000||s.y<190||s.y>1690))continue;const a=Math.max(0,Math.sin(t*2.5+s.ph));fx.globalAlpha=a*.9;fx.fillStyle=t>T5?'#F28C28':'#FFD98A';star(fx,s.x,s.y,s.s*a);}fx.globalAlpha=1;}
+}
+window.seek=function(t){tl.seek(t,false);ambient(t);};
+window.DUR=END;
+seek(0);
+</script>
+</body></html>
